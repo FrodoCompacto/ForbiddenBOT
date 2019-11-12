@@ -38,7 +38,7 @@ public class AdminService {
 		try {
 			repo.deleteById(id);
 		} catch (DataIntegrityViolationException e) {
-			throw new DataIntegrityException("It is not possible to exclude administrators who have verified objects associated with them.");
+			throw new DataIntegrityException("It is not possible to exclude administrators who have verified objects associated with them.")
 		}
 	}
 

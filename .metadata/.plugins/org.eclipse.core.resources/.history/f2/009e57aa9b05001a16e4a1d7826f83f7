@@ -37,17 +37,11 @@ public class AdminResource {
 		return ResponseEntity.created(uri).build();
 
 	}
-
+	
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Void> update(@RequestBody Admin adm, @PathVariable Integer id) {
+	public ResponseEntity<Void> update(@RequestBody Admin adm, @PathVariable Integer id){
 		adm.setId(id);
 		adm = service.update(adm);
-		return ResponseEntity.noContent().build();
-	}
-
-	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<Void> delete(@PathVariable Integer id) {
-		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
 }

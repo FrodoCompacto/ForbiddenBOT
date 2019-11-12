@@ -1,7 +1,5 @@
 package io.forbiddenbot.resources;
 
-
-
 import java.net.URI;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,37 +11,37 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import io.forbiddenbot.domain.ExodiaPart;
-import io.forbiddenbot.services.ExodiaPartService;
+import io.forbiddenbot.domain.Admin;
+import io.forbiddenbot.services.AdminService;
 
 @RestController
-@RequestMapping(value="/exodiaparts")
-public class ExodiaPartResource {
-	
+@RequestMapping(value = "/admins")
+public class AdminResource {
+
 	@Autowired
-	private ExodiaPartService service;
-	
-	@RequestMapping(value="/{id}", method=RequestMethod.GET)
-	public ResponseEntity<ExodiaPart> find(@PathVariable Integer id) {
-		
-		ExodiaPart obj = service.find(id);
-		
+	private AdminService service;
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	public ResponseEntity<Admin> find(@PathVariable Integer id) {
+
+		Admin obj = service.find(id);
+
 		return ResponseEntity.ok().body(obj);
 	}
-	
+
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> insert(@RequestBody ExodiaPart ex) {
-		ex = service.insert(ex);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(ex.getId()).toUri();
+	public ResponseEntity<Void> insert(@RequestBody Admin adm) {
+		adm = service.insert(adm);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(adm.getId()).toUri();
 
 		return ResponseEntity.created(uri).build();
 
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Void> update(@RequestBody ExodiaPart ex, @PathVariable Integer id){
-		ex.setId(id);
-		ex = service.update(ex);
+	public ResponseEntity<Void> update(@RequestBody Admin adm, @PathVariable Integer id){
+		adm.setId(id);
+		adm = service.update(adm);
 		return ResponseEntity.noContent().build();
 	}
 	
@@ -52,4 +50,5 @@ public class ExodiaPartResource {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
-}
+	}
+
