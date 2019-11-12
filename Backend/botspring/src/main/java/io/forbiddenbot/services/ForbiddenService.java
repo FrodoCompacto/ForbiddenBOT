@@ -15,9 +15,14 @@ public class ForbiddenService {
 	@Autowired
 	private ForbiddenRepository repo;
 		
-	public Forbidden buscar(Integer id) {
+	public Forbidden find(Integer id) {
 		Optional<Forbidden> obj= repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! Id: " + id + ", Tipo: " + Forbidden.class.getName()));
 	}
+	
+//	public Forbidden insert(Forbidden fbdn) {
+//		fbdn.setId(null);
+//		return repo.save(fbdn);
+//	}
 	
 }

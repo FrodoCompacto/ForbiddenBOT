@@ -15,9 +15,19 @@ public class AdminService {
 	@Autowired
 	private AdminRepository repo;
 		
-	public Admin buscar(Integer id) {
+	public Admin find(Integer id) {
 		Optional<Admin> obj= repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! Id: " + id + ", Tipo: " + Admin.class.getName()));
+	}
+	
+	public Admin insert(Admin adm) {
+		adm.setId(null);
+		return repo.save(adm);
+	}
+	
+	public Admin update(Admin adm) {
+		find(adm.getId());
+		return repo.save(adm);
 	}
 	
 }
