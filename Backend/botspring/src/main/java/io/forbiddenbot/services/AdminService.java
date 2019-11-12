@@ -1,5 +1,6 @@
 package io.forbiddenbot.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +20,8 @@ public class AdminService {
 
 	public Admin find(Integer id) {
 		Optional<Admin> obj = repo.findById(id);
-		return obj.orElseThrow(() -> new ObjectNotFoundException(
-				"Object not found! Id: " + id + ", Type: " + Admin.class.getName()));
+		return obj.orElseThrow(
+				() -> new ObjectNotFoundException("Object not found! Id: " + id + ", Type: " + Admin.class.getName()));
 	}
 
 	public Admin insert(Admin adm) {
@@ -38,8 +39,13 @@ public class AdminService {
 		try {
 			repo.deleteById(id);
 		} catch (DataIntegrityViolationException e) {
-			throw new DataIntegrityException("It is not possible to exclude administrators who have verified objects associated with them.");
+			throw new DataIntegrityException(
+					"It is not possible to exclude administrators who have verified objects associated with them.");
 		}
+	}
+
+	public List<Admin> findAll() {
+		return repo.findAll();
 	}
 
 }

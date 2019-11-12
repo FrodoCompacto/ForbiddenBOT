@@ -1,5 +1,6 @@
 package io.forbiddenbot.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,10 @@ public class ForbiddenService {
 		} catch (DataIntegrityViolationException e) {
 			throw new DataIntegrityException("It is not possible to delete a summoned forbidden, he will delete you!!!");
 		}
+	}
+	
+	public List<Forbidden> findAll() {
+		return repo.findAll();
 	}
 	
 }

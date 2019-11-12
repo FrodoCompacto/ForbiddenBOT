@@ -1,5 +1,6 @@
 package io.forbiddenbot.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,5 +40,9 @@ public class ExodiaPartService {
 		} catch (DataIntegrityViolationException e) {
 			throw new DataIntegrityException("It is not possible to exclude verified exodia parts.");
 		}
+	}
+	
+	public List<ExodiaPart> findAll() {
+		return repo.findAll();
 	}
 }
