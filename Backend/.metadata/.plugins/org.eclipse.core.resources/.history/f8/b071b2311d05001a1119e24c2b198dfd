@@ -1,0 +1,5 @@
+package io.forbiddenbot.resources.exceptions;
+
+public class ResourceExceptionHandler {
+
+}

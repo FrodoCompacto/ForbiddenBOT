@@ -1,0 +1,5 @@
+package io.forbiddenbot.domain;
+
+public class ExodiaPart {
+
+}

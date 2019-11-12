@@ -1,0 +1,5 @@
+package io.forbiddenbot.services.exceptions;
+
+public class ObjectNotFoundException {
+
+}

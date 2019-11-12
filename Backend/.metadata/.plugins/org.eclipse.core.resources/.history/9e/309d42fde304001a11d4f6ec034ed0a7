@@ -1,0 +1,5 @@
+package io.forbiddenbot.repositories;
+
+public class AdminRepository {
+
+}

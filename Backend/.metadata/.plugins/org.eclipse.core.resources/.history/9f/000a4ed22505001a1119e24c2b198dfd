@@ -1,0 +1,70 @@
+package io.forbiddenbot;
+
+import java.util.Arrays;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import io.forbiddenbot.domain.Admin;
+import io.forbiddenbot.domain.ExodiaPart;
+import io.forbiddenbot.domain.Forbidden;
+import io.forbiddenbot.domain.enums.PartType;
+import io.forbiddenbot.repositories.AdminRepository;
+import io.forbiddenbot.repositories.ExodiaPartRepository;
+
+@SpringBootApplication
+public class BotspringApplication implements CommandLineRunner {
+
+	@Autowired
+	private AdminRepository adminRepository;
+	@Autowired
+	private ExodiaPartRepository exodiaPartRepository;
+
+	public static void main(String[] args) {
+		SpringApplication.run(BotspringApplication.class, args);
+	}
+
+	@Override
+	public void run(String... args) throws Exception {
+
+		Admin adm1 = new Admin(null, "fb.com/jvfaggion", "eumesmo", "euman123");
+		Admin adm2 = new Admin(null, "fb.com/teste", "aaaa", "bbbb");
+
+		
+		ExodiaPart ex1 = new ExodiaPart(null, "image path", "Frodo", "192.168.1.1", "10/10/2010", PartType.ARM, true,
+				true, adm1);
+
+		ExodiaPart ex2 = new ExodiaPart(null, "image path", "aaaaa", "192.168", "11/11/2011", PartType.HEAD, true, true,
+				adm1);
+
+		ExodiaPart ex3 = new ExodiaPart(null, "image path", "bbbb", "192.168", "11/11/2016", PartType.LEG, true, true,
+				adm1);
+
+		ExodiaPart ex4 = new ExodiaPart(null, "image path", "ccccc", "192.168", "11/11/2014", PartType.HEAD, true, true,
+				adm2);
+
+		ExodiaPart ex5 = new ExodiaPart(null, "image path", "ddddd", "192.168", "11/11/2012", PartType.ARM, true, true,
+				adm2);
+		
+		
+		Forbidden f1 = new Forbidden(null, "12/12/2012");
+		Forbidden f2 = new Forbidden(null, "08/08/2008");
+		
+		
+		f1.getExodiaParts().addAll(Arrays.asList(ex1,ex2,ex3,ex4,ex5));
+		f1.getExodiaParts().addAll(Arrays.asList(ex5,ex4,ex3,ex4,ex5));
+		
+
+		adm1.getVerifiedParts().addAll(Arrays.asList(ex1, ex2, ex3));
+		adm2.getVerifiedParts().addAll(Arrays.asList(ex4, ex5));
+		
+
+		
+		adminRepository.saveAll(Arrays.asList(adm1, adm2));
+		exodiaPartRepository.saveAll(Arrays.asList(ex1, ex2, ex3, ex4, ex5));
+
+	}
+
+}

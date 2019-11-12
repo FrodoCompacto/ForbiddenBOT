@@ -1,0 +1,33 @@
+package io.forbiddenbot.domain;
+
+public class ExodiaPart {
+	
+	private Integer id;
+	private String image;
+	private String uploader;
+	private String uploaderIp;
+	private String uploadDate;
+	private Boolean isLeftOriented;
+	private Boolean isVerified;
+	
+	private Admin verifier;
+	
+	public ExodiaPart(){}
+
+	public ExodiaPart(Integer id, String image, String uploader, String uploaderIp, String uploadDate,
+			Boolean isLeftOriented, Boolean isVerified, Admin verifier) {
+		super();
+		this.id = id;
+		this.image = image;
+		this.uploader = uploader;
+		this.uploaderIp = uploaderIp;
+		this.uploadDate = uploadDate;
+		this.isLeftOriented = isLeftOriented;
+		this.isVerified = isVerified;
+		this.verifier = verifier;
+	}
+	
+	
+	
+
+}
