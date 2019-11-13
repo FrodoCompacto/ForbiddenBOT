@@ -1,3 +1,4 @@
 Backend/.metadata/
 Backend/Servers/
-Backend/botspring/src/main/resources/application-prod.properties
+
+*.properties
