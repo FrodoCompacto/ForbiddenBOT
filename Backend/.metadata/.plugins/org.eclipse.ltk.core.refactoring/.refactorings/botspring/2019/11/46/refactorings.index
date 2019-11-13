@@ -11,3 +11,5 @@
 1573546903682	Copy compilation unit
 1573547897619	Encapsulate field 'sourceFor'
 1573601481207	Delete element
+1573616753867	Delete element
+1573624022789	Encapsulate field 'isVerified'

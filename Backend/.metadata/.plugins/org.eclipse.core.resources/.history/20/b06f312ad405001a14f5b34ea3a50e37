@@ -1,0 +1,26 @@
+package io.forbiddenbot;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class RowThread extends Thread {
+	
+	public static List<String> ipList = new ArrayList<>();
+
+	public RowThread() {
+	}
+
+	public void run() {
+
+		while (true) {
+			System.out.println("Ip List Purged.");
+			ipList.forEach(x -> System.out.println(x));
+			ipList.clear();
+			try {
+				sleep(60000);
+			} catch (InterruptedException e) {
+				e.getMessage();
+			}
+		}
+	}
+}

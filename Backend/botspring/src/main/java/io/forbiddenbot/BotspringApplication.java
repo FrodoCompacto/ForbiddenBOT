@@ -36,21 +36,23 @@ public class BotspringApplication implements CommandLineRunner {
 		Admin adm1 = new Admin(null, "fb.com/jvfaggion", "eumesmo", "euman123");
 		Admin adm2 = new Admin(null, "fb.com/teste", "aaaa", "bbbb");
 		
-
+		RowThread thread = new RowThread();
+		thread.start();
+		
 		
 		ExodiaPart ex1 = new ExodiaPart(null, "image path", "Frodo", "192.168.1.1", new Date(), PartType.ARM, true,
 				true, adm1);
 
-		ExodiaPart ex2 = new ExodiaPart(null, "image path", "aaaaa", "192.168", new Date(), PartType.HEAD, true, true,
+		ExodiaPart ex2 = new ExodiaPart(null, "image path", "aaaaa", "192.168.1.2", new Date(), PartType.HEAD, true, true,
 				adm1);
 
-		ExodiaPart ex3 = new ExodiaPart(null, "image path", "bbbb", "192.168", new Date(), PartType.LEG, true, true,
+		ExodiaPart ex3 = new ExodiaPart(null, "image path", "bbbb", "192.168.1.3", new Date(), PartType.LEG, true, true,
 				adm1);
 
-		ExodiaPart ex4 = new ExodiaPart(null, "image path", "ccccc", "192.168", new Date(), PartType.HEAD, true, true,
+		ExodiaPart ex4 = new ExodiaPart(null, "image path", "ccccc", "192.168.1.4", new Date(), PartType.HEAD, true, true,
 				adm2);
 
-		ExodiaPart ex5 = new ExodiaPart(null, "image path", "ddddd", "192.168", new Date(), PartType.ARM, true, true,
+		ExodiaPart ex5 = new ExodiaPart(null, "image path", "ddddd", "192.168.1.5", new Date(), PartType.ARM, true, true,
 				adm2);
 		
 		

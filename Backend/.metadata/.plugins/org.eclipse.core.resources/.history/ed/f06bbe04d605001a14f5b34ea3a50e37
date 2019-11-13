@@ -1,0 +1,45 @@
+package io.forbiddenbot.services.validation;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
+
+
+import io.forbiddenbot.RowThread;
+import io.forbiddenbot.domain.ExodiaPart;
+import io.forbiddenbot.resources.exceptions.FieldMessage;
+
+
+public class ExodiaPartValidator implements ConstraintValidator<ExodiaPartInsert, ExodiaPart> {
+
+	
+	@Override
+	public void initialize(ExodiaPartInsert ann) {
+	}
+
+	@Override
+	public boolean isValid(ExodiaPart obj, ConstraintValidatorContext context) {
+		
+		List<FieldMessage> list = new ArrayList<>();
+		
+		
+		int aux = 0;	
+		for (int i = 0; i < RowThread.ipList.size();i++) {
+			if (RowThread.ipList.get(i) == obj.getUploaderIp()) aux++;
+			System.out.println(aux);
+		}
+		
+		if (aux > 3) list.add(new FieldMessage("uploaderIp", "Too many posts in a short period of time."));
+		
+		for (FieldMessage e : list) {
+			context.disableDefaultConstraintViolation();
+			context.buildConstraintViolationWithTemplate(e.getMessage()).addPropertyNode(e.getFieldName())
+					.addConstraintViolation();
+		}
+		return list.isEmpty();
+	}
+
+
+}

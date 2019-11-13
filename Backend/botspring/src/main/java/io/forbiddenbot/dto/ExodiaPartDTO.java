@@ -5,7 +5,6 @@ import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import io.forbiddenbot.domain.Admin;
 import io.forbiddenbot.domain.ExodiaPart;
 import io.forbiddenbot.domain.enums.PartType;
 
@@ -22,8 +21,9 @@ public class ExodiaPartDTO implements Serializable {
 	private Date uploadDate;
 	private Integer type;
 	private Boolean isLeftOriented;
+	private Boolean isVerified;
 	
-	private VerifierDTO verifier;
+//	private VerifierDTO verifier;
 	
 	
 	public ExodiaPartDTO() {
@@ -36,9 +36,10 @@ public class ExodiaPartDTO implements Serializable {
 		this.uploadDate = ex.getUploadDate();
 		this.type = ex.getType().getCod();
 		this.isLeftOriented = ex.getIsLeftOriented();
+		this.setIsVerified(ex.getIsVerified());
 		
-		if (ex.getVerifier() == null) ex.setVerifier(new Admin());
-		this.verifier = new VerifierDTO(ex.getVerifier());
+//		this.verifier = (ex.getVerifier() == null) ? new VerifierDTO(new Admin()) : new VerifierDTO(ex.getVerifier());
+	
 	}
 	
 
@@ -66,8 +67,6 @@ public class ExodiaPartDTO implements Serializable {
 		this.uploader = uploader;
 	}
 
-
-
 	public Date getUploadDate() {
 		return uploadDate;
 	}
@@ -92,13 +91,15 @@ public class ExodiaPartDTO implements Serializable {
 		this.isLeftOriented = isLeftOriented;
 	}
 
-	public VerifierDTO getVerifier() {
-		return verifier;
+	public Boolean getIsVerified() {
+		return isVerified;
 	}
 
-	public void setVerifier(VerifierDTO verifier) {
-		this.verifier = verifier;
+	public void setIsVerified(Boolean isVerified) {
+		this.isVerified = isVerified;
 	}
+
+
 
 
 	

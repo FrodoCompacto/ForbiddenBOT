@@ -1,0 +1,16 @@
+package io.forbiddenbot;
+
+public class RowThread extends Thread{
+	
+	public RowThread() {}
+	
+	public void run() {
+		
+		System.out.println("a");
+		try {
+			sleep(1000);
+		} catch (InterruptedException e) {
+			e.getMessage();
+		}
+	}
+}
