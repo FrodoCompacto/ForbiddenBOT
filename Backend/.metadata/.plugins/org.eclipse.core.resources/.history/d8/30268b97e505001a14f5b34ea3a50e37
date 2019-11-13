@@ -13,6 +13,7 @@ public class RowThread extends Thread {
 	public void run() {
 
 		while (true) {
+			System.out.println("Ip List Purged.");
 			ipList.clear();
 			try {
 				sleep(30000);

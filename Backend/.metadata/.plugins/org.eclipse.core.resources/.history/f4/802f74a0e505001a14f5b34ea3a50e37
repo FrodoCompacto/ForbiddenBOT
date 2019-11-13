@@ -28,6 +28,7 @@ public class ExodiaPartValidator implements ConstraintValidator<ExodiaPartInsert
 		
 		List<String> ipList = RowThread.ipList;
 		int occurrences = Collections.frequency(ipList, obj.getUploaderIp());
+		ipList.forEach(x -> System.out.println(x));
 		
 		
 		
