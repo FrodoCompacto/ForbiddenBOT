@@ -80,28 +80,4 @@ public class ExodiaPartResource {
 		Page<ExodiaPartDTO> listDto = pageEx.map(obj -> new ExodiaPartDTO(obj));
 		return ResponseEntity.ok().body(listDto);
 	}
-	
-	@RequestMapping(value="/unverified", method = RequestMethod.GET)
-	public ResponseEntity<Page<ExodiaPartDTO>> findUnverified(
-			@RequestParam(name="page", defaultValue="0") Integer page, 
-			@RequestParam(name="linesPerPage", defaultValue="24") Integer linesPerPage, 
-			@RequestParam(name="orderBy", defaultValue="uploadDate") String orderBy, 
-			@RequestParam(name="direction", defaultValue="DESC") String direction) {
-
-		Page<ExodiaPart> pageEx = service.findUnverified(page, linesPerPage, orderBy, direction);
-		Page<ExodiaPartDTO> listDto = pageEx.map(obj -> new ExodiaPartDTO(obj));
-		return ResponseEntity.ok().body(listDto);
-	}
-	
-	@RequestMapping(value="/verified", method = RequestMethod.GET)
-	public ResponseEntity<Page<ExodiaPartDTO>> findVerified(
-			@RequestParam(name="page", defaultValue="0") Integer page, 
-			@RequestParam(name="linesPerPage", defaultValue="24") Integer linesPerPage, 
-			@RequestParam(name="orderBy", defaultValue="uploadDate") String orderBy, 
-			@RequestParam(name="direction", defaultValue="DESC") String direction) {
-
-		Page<ExodiaPart> pageEx = service.findVerified(page, linesPerPage, orderBy, direction);
-		Page<ExodiaPartDTO> listDto = pageEx.map(obj -> new ExodiaPartDTO(obj));
-		return ResponseEntity.ok().body(listDto);
-	}
 }

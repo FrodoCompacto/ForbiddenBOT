@@ -52,7 +52,7 @@ public class BotspringApplication implements CommandLineRunner {
 		ExodiaPart ex4 = new ExodiaPart(null, "image path", "ccccc", "192.168.1.4", new Date(), PartType.HEAD, true, true,
 				adm2);
 
-		ExodiaPart ex5 = new ExodiaPart(null, "image path", "ddddd", "192.168.1.5", new Date(), PartType.ARM, true, false,
+		ExodiaPart ex5 = new ExodiaPart(null, "image path", "ddddd", "192.168.1.5", new Date(), PartType.ARM, true, true,
 				adm2);
 		
 		

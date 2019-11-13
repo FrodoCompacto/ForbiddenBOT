@@ -4,17 +4,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import io.forbiddenbot.RowThread;
-import io.forbiddenbot.domain.Admin;
 import io.forbiddenbot.domain.ExodiaPart;
 import io.forbiddenbot.repositories.ExodiaPartRepository;
 import io.forbiddenbot.services.exceptions.DataIntegrityException;
@@ -31,12 +28,10 @@ public class ExodiaPartService {
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Object not found! Id: " + id + ", Type: " + ExodiaPart.class.getName()));
 	}
 	
-	@Transactional
 	public ExodiaPart insert(ExodiaPart part) {
 		part.setId(null);
 		RowThread.ipList.add(part.getUploaderIp());
 		part.setIsVerified(false);
-		part.setVerifier(new Admin());
 		part.setUploadDate(new Date());
 		return repo.save(part);
 	}
@@ -67,12 +62,7 @@ public class ExodiaPartService {
 	
 	public Page<ExodiaPart> findUnverified(Integer page, Integer linesPerPage, String orderBy, String direction){
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
-		return repo.findUnverified(pageRequest);
-	}
-	
-	public Page<ExodiaPart> findVerified(Integer page, Integer linesPerPage, String orderBy, String direction){
-		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
-		return repo.findVerified(pageRequest);
+		return repo.findAll(pageRequest);
 	}
 	
 	private void updateData(ExodiaPart newObj, ExodiaPart obj) {

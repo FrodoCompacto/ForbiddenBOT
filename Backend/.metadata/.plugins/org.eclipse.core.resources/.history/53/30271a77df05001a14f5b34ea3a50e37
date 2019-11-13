@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import io.forbiddenbot.RowThread;
-import io.forbiddenbot.domain.Admin;
 import io.forbiddenbot.domain.ExodiaPart;
 import io.forbiddenbot.repositories.ExodiaPartRepository;
 import io.forbiddenbot.services.exceptions.DataIntegrityException;
@@ -36,7 +35,6 @@ public class ExodiaPartService {
 		part.setId(null);
 		RowThread.ipList.add(part.getUploaderIp());
 		part.setIsVerified(false);
-		part.setVerifier(new Admin());
 		part.setUploadDate(new Date());
 		return repo.save(part);
 	}

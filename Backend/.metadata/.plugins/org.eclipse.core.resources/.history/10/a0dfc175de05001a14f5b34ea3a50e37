@@ -94,7 +94,7 @@ public class ExodiaPartResource {
 	}
 	
 	@RequestMapping(value="/verified", method = RequestMethod.GET)
-	public ResponseEntity<Page<ExodiaPartDTO>> findVerified(
+	public ResponseEntity<Page<ExodiaPartDTO>> findUnverified(
 			@RequestParam(name="page", defaultValue="0") Integer page, 
 			@RequestParam(name="linesPerPage", defaultValue="24") Integer linesPerPage, 
 			@RequestParam(name="orderBy", defaultValue="uploadDate") String orderBy, 
