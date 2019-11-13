@@ -3,7 +3,6 @@ package io.forbiddenbot.resources;
 
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 //import java.net.URI;
 //import org.springframework.web.bind.annotation.RequestBody;
@@ -30,11 +29,11 @@ public class ForbiddenResource {
 	private ForbiddenService service;
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
-	public ResponseEntity<ForbiddenDTO> find(@PathVariable Integer id) {
+	public ResponseEntity<Forbidden> find(@PathVariable Integer id) {
 		
 		Forbidden obj = service.find(id);
 		
-		return ResponseEntity.ok().body(new ForbiddenDTO(obj));
+		return ResponseEntity.ok().body(obj);
 	}
 	
 	
@@ -45,11 +44,10 @@ public class ForbiddenResource {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<ForbiddenDTO>> findAll() {
+	public ResponseEntity<List<Forbidden>> findAll() {
 
 		List<Forbidden> listFbdn = service.findAll();
-		List<ForbiddenDTO> listDto = listFbdn.stream().map(obj -> new ForbiddenDTO(obj)).collect(Collectors.toList());
-		return ResponseEntity.ok().body(listDto);
+		return ResponseEntity.ok().body(listFbdn);
 	}
 	
 	@RequestMapping(value="/page", method = RequestMethod.GET)
