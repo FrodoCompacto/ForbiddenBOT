@@ -1,5 +1,0 @@
-package io.forbiddenbot.domain.enums;
-
-public enum PartType {
-
-}
