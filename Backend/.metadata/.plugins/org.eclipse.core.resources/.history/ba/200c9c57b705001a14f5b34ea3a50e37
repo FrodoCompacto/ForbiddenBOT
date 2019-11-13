@@ -6,8 +6,6 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -40,7 +38,7 @@ public class ExodiaPartResource {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> insert(@Valid @RequestBody ExodiaPart ex) {
+	public ResponseEntity<Void> insert(@RequestBody ExodiaPart ex) {
 		ex = service.insert(ex);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(ex.getId()).toUri();
 
@@ -49,7 +47,7 @@ public class ExodiaPartResource {
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Void> update(@Valid @RequestBody ExodiaPart ex, @PathVariable Integer id){
+	public ResponseEntity<Void> update(@RequestBody ExodiaPart ex, @PathVariable Integer id){
 		ex.setId(id);
 		ex = service.update(ex);
 		return ResponseEntity.noContent().build();

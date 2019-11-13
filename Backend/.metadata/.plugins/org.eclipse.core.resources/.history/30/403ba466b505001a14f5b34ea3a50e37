@@ -24,6 +24,16 @@ public class AdminService {
 				() -> new ObjectNotFoundException("Object not found! Id: " + id + ", Type: " + Admin.class.getName()));
 	}
 
+	public Admin insert(Admin adm) {
+		adm.setId(null);
+		return repo.save(adm);
+	}
+
+	public Admin update(Admin adm) {
+		find(adm.getId());
+		return repo.save(adm);
+	}
+
 	public void delete(Integer id) {
 		find(id);
 		try {

@@ -12,9 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 
@@ -32,19 +30,19 @@ public class ExodiaPart implements Serializable {
 	private Integer id;
 	@NotEmpty(message="Required field.")
 	private String image;
-	@Length(min=0, max=15, message="Max characters: 15")
+	@Length(min="0", max="15")
 	private String uploader;
 	private String uploaderIp;
 	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
 	private Date uploadDate;
-	@Min(0)
+	@NotEmpty(message="Required field.")
 	private Integer type;
+	@NotEmpty(message="Required field.")
 	private Boolean isLeftOriented;
 	private Boolean isVerified;
 	
 	@ManyToOne
 	@JoinColumn(name="admin_verifier")
-	@NotNull
 	private Admin verifier;
 	
 	@JsonIgnore
