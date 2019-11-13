@@ -1,0 +1,5 @@
+package io.forbiddenbot.config;
+
+public class TestConfig {
+
+}

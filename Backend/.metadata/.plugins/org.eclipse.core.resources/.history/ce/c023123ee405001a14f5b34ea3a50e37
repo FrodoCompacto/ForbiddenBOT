@@ -1,11 +1,24 @@
 package io.forbiddenbot;
 
+import java.util.Arrays;
+import java.util.Date;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import io.forbiddenbot.domain.Admin;
+import io.forbiddenbot.domain.ExodiaPart;
+import io.forbiddenbot.domain.Forbidden;
+import io.forbiddenbot.domain.enums.PartType;
+import io.forbiddenbot.repositories.AdminRepository;
+import io.forbiddenbot.repositories.ExodiaPartRepository;
+import io.forbiddenbot.repositories.ForbiddenRepository;
+
 @SpringBootApplication
 public class BotspringApplication implements CommandLineRunner {
+
 
 	public static void main(String[] args) {
 		SpringApplication.run(BotspringApplication.class, args);
