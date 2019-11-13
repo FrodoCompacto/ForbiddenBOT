@@ -35,6 +35,14 @@ public class ForbiddenResource {
 		return ResponseEntity.ok().body(obj);
 	}
 	
+//	@RequestMapping(method = RequestMethod.POST)
+//	public ResponseEntity<Void> insert(@RequestBody Forbidden fbdn) {
+//		fbdn = service.insert(fbdn);
+//		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(fbdn.getId()).toUri();
+//
+//		return ResponseEntity.created(uri).build();
+//
+//	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> delete(@PathVariable Integer id) {

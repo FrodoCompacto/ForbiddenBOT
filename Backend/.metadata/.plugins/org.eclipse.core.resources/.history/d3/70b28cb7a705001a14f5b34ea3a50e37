@@ -26,6 +26,10 @@ public class ForbiddenService {
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Object not found! Id: " + id + ", Type: " + Forbidden.class.getName()));
 	}
 	
+//	public Forbidden insert(Forbidden fbdn) {
+//		fbdn.setId(null);
+//		return repo.save(fbdn);
+//	}
 	
 	public void delete(Integer id) {
 		find(id);
