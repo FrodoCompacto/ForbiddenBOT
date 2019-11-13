@@ -22,7 +22,7 @@ public class ExodiaPartService {
 	private ExodiaPartRepository repo;
 		
 	public ExodiaPart find(Integer id) {
-		Optional<ExodiaPart> obj = repo.findById(id);
+		Optional<ExodiaPart> obj= repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Object not found! Id: " + id + ", Type: " + ExodiaPart.class.getName()));
 	}
 	

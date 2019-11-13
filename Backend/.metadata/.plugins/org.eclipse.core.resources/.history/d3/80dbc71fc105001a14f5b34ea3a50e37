@@ -37,7 +37,7 @@ public class ExodiaPartDTO implements Serializable {
 		this.type = ex.getType().getCod();
 		this.isLeftOriented = ex.getIsLeftOriented();
 		
-		if (ex.getVerifier() == null) ex.setVerifier(new Admin());
+		if (ex.getVerifier().equals(null)) ex.setVerifier(new Admin());
 		this.verifier = new VerifierDTO(ex.getVerifier());
 	}
 	

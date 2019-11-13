@@ -5,7 +5,6 @@ import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import io.forbiddenbot.domain.Admin;
 import io.forbiddenbot.domain.ExodiaPart;
 import io.forbiddenbot.domain.enums.PartType;
 
@@ -37,7 +36,7 @@ public class ExodiaPartDTO implements Serializable {
 		this.type = ex.getType().getCod();
 		this.isLeftOriented = ex.getIsLeftOriented();
 		
-		if (ex.getVerifier() == null) ex.setVerifier(new Admin());
+		if (ex.getVerifier().equals(null)) ex.getVerifier().setId(1);
 		this.verifier = new VerifierDTO(ex.getVerifier());
 	}
 	
