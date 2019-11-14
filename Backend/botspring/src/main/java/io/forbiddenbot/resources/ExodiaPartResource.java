@@ -21,6 +21,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import io.forbiddenbot.domain.ExodiaPart;
 import io.forbiddenbot.dto.ExodiaPartDTO;
+import io.forbiddenbot.dto.ExodiaPartNewDTO;
 import io.forbiddenbot.services.ExodiaPartService;
 
 @RestController
@@ -40,7 +41,8 @@ public class ExodiaPartResource {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> insert(@Valid @RequestBody ExodiaPart ex) {
+	public ResponseEntity<Void> insert(@Valid @RequestBody ExodiaPartNewDTO exDTO) {
+		ExodiaPart ex = exDTO.toExodiaPart();
 		ex = service.insert(ex);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(ex.getId()).toUri();
 
@@ -48,10 +50,9 @@ public class ExodiaPartResource {
 
 	}
 	
-	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Void> update(@Valid @RequestBody ExodiaPart ex, @PathVariable Integer id){
-		ex.setId(id);
-		ex = service.update(ex);
+	@RequestMapping(value = "/verify/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<Void> update(@PathVariable Integer id){
+		service.verify(id);
 		return ResponseEntity.noContent().build();
 	}
 	

@@ -12,18 +12,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
 
-import org.hibernate.validator.constraints.Length;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.forbiddenbot.domain.enums.PartType;
-import io.forbiddenbot.services.validation.ExodiaPartInsert;
 
-@ExodiaPartInsert
 @Entity
 public class ExodiaPart implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -31,14 +26,11 @@ public class ExodiaPart implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
-	@NotEmpty(message="Required field.")
 	private String image;
-	@Length(min=0, max=15, message="Max characters: 15")
 	private String uploader;
 	private String uploaderIp;
 	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
 	private Date uploadDate;
-	@Min(value = 0,message = "Type must be ARM, LEG or HEAD.")
 	private Integer type;
 	private Boolean isLeftOriented;
 	private Boolean isVerified;

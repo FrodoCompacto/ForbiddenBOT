@@ -1,6 +1,5 @@
 package io.forbiddenbot.services;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,11 +15,15 @@ import org.springframework.transaction.annotation.Transactional;
 import io.forbiddenbot.RowThread;
 import io.forbiddenbot.domain.ExodiaPart;
 import io.forbiddenbot.repositories.ExodiaPartRepository;
+import io.forbiddenbot.security.UserSS;
 import io.forbiddenbot.services.exceptions.DataIntegrityException;
 import io.forbiddenbot.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class ExodiaPartService {
+	
+	@Autowired
+	private AdminService adminService;
 	
 	@Autowired
 	private ExodiaPartRepository repo;
@@ -32,17 +35,16 @@ public class ExodiaPartService {
 	
 	@Transactional
 	public ExodiaPart insert(ExodiaPart part) {
-		part.setId(null);
+//		part.setId(null);
 		RowThread.ipList.add(part.getUploaderIp());
-		part.setIsVerified(false);
-		part.setUploadDate(new Date());
+//		part.setIsVerified(false);
+//		part.setUploadDate(new Date());
 		return repo.save(part);
 	}
 	
-	public ExodiaPart update(ExodiaPart ex) {
-		ExodiaPart auxEx = find(ex.getId());
-		updateData(auxEx, ex);
-		return repo.save(auxEx);
+	public void verify(Integer id) {
+		ExodiaPart ex = find(id);
+		repo.save(updateData(ex));
 	}
 	
 	public void delete(Integer id) {
@@ -73,17 +75,11 @@ public class ExodiaPartService {
 		return repo.findVerified(pageRequest);
 	}
 	
-	private void updateData(ExodiaPart newObj, ExodiaPart obj) {
-		newObj.setId(obj.getId());
-		newObj.setImage(obj.getImage());
-		newObj.setIsLeftOriented(obj.getIsLeftOriented());
-		newObj.setIsVerified(obj.getIsVerified());
-		newObj.setSourceFor(obj.getSourceFor());
-		newObj.setType(obj.getType());
-		newObj.setUploadDate(obj.getUploadDate());
-		newObj.setUploader(obj.getUploader());
-		newObj.setUploaderIp(obj.getUploaderIp());
-		newObj.setVerifier(obj.getVerifier());
+	private ExodiaPart updateData(ExodiaPart newObj) {
+		newObj.setIsVerified(true);
+		UserSS user = UserService.authenticated();
+		newObj.setVerifier(adminService.find(user.getId()));
+		return newObj;
 	}
 }
 

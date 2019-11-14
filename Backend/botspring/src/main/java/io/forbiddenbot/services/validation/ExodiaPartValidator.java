@@ -9,11 +9,12 @@ import javax.validation.ConstraintValidatorContext;
 
 
 import io.forbiddenbot.RowThread;
-import io.forbiddenbot.domain.ExodiaPart;
+import io.forbiddenbot.dto.ExodiaPartNewDTO;
 import io.forbiddenbot.resources.exceptions.FieldMessage;
+import io.forbiddenbot.services.UserService;
 
 
-public class ExodiaPartValidator implements ConstraintValidator<ExodiaPartInsert, ExodiaPart> {
+public class ExodiaPartValidator implements ConstraintValidator<ExodiaPartInsert, ExodiaPartNewDTO> {
 
 	
 	@Override
@@ -21,17 +22,16 @@ public class ExodiaPartValidator implements ConstraintValidator<ExodiaPartInsert
 	}
 
 	@Override
-	public boolean isValid(ExodiaPart obj, ConstraintValidatorContext context) {
+	public boolean isValid(ExodiaPartNewDTO obj, ConstraintValidatorContext context) {
 		
 		List<FieldMessage> list = new ArrayList<>();
 		
-		
+		if( UserService.authenticated() == null ) { 
 		List<String> ipList = RowThread.ipList;
 		int occurrences = Collections.frequency(ipList, obj.getUploaderIp());
 		
-		
-		
 		if (occurrences > 3 ) list.add(new FieldMessage("uploaderIp", "Too many posts in a short period of time."));
+		}
 		
 		for (FieldMessage e : list) {
 			context.disableDefaultConstraintViolation();
