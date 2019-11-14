@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import io.forbiddenbot.domain.Admin;
@@ -18,6 +19,9 @@ import io.forbiddenbot.repositories.ForbiddenRepository;
 public class DBService {
 
 	@Autowired
+	private BCryptPasswordEncoder pe;
+	
+	@Autowired
 	private AdminRepository adminRepository;
 	@Autowired
 	private ExodiaPartRepository exodiaPartRepository;
@@ -26,8 +30,8 @@ public class DBService {
 
 	public void instantiateTesteDatabase() {
 
-		Admin adm1 = new Admin(null, "fb.com/jvfaggion", "eumesmo", "euman123");
-		Admin adm2 = new Admin(null, "fb.com/teste", "aaaa", "bbbb");
+		Admin adm1 = new Admin(null, "fb.com/jvfaggion", "eumesmo", pe.encode("euman123"));
+		Admin adm2 = new Admin(null, "fb.com/teste", "aaaa", pe.encode("bbbbb"));
 
 		ExodiaPart ex1 = new ExodiaPart(null, "image path", "Frodo", "192.168.1.1", new Date(), PartType.ARM, true,
 				true, adm1);

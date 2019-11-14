@@ -22,6 +22,8 @@ public class Admin implements Serializable {
 	private Integer id;
 	private String facebookUrl;
 	private String login;
+	
+	@JsonIgnore
 	private String password;
 	
 	@JsonIgnore
