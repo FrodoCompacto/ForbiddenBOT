@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import io.forbiddenbot.RowThread;
+import io.forbiddenbot.domain.Admin;
 import io.forbiddenbot.domain.ExodiaPart;
 import io.forbiddenbot.repositories.ExodiaPartRepository;
 import io.forbiddenbot.security.UserSS;
@@ -78,7 +79,9 @@ public class ExodiaPartService {
 	private ExodiaPart updateData(ExodiaPart newObj) {
 		newObj.setIsVerified(true);
 		UserSS user = UserService.authenticated();
-		newObj.setVerifier(adminService.find(user.getId()));
+		Admin adm = adminService.find(user.getId());
+		adm.getVerifiedParts().add(newObj);
+		newObj.setVerifier(adm);
 		return newObj;
 	}
 }
