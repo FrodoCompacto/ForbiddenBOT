@@ -1,5 +1,6 @@
 package io.forbiddenbot.services;
 
+import java.awt.image.BufferedImage;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
@@ -29,6 +30,9 @@ public class ExodiaPartService {
 	private S3Service s3Service;
 	
 	@Autowired
+	private ImageService imageService;
+	
+	@Autowired
 	private AdminService adminService;
 	
 	@Autowired
@@ -41,10 +45,7 @@ public class ExodiaPartService {
 	
 	@Transactional
 	public ExodiaPart insert(ExodiaPart part) {
-//		part.setId(null);
 		RowThread.ipList.add(part.getUploaderIp());
-//		part.setIsVerified(false);
-//		part.setUploadDate(new Date());
 		return repo.save(part);
 	}
 	
@@ -92,7 +93,12 @@ public class ExodiaPartService {
 	
 	public URI uploadExodiaImage(MultipartFile multiPartFile) {
 		
-		return s3Service.uploadFile(multiPartFile);
+		BufferedImage jpgImage = imageService.getJpgImageFromFile(multiPartFile);
+		String string = multiPartFile.getOriginalFilename().substring(0, multiPartFile.getOriginalFilename().length()-4);
+		String fileName = string + ".jpg";
+		
+		
+		return s3Service.uploadFile(imageService.getInputStream(jpgImage, "jpg"), fileName, "image");
 	}
 	
 }
