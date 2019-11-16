@@ -11,16 +11,24 @@
       id="sticky-sidebar"
     >
       <div class="list-group list-group-flush">
-        <a class="list-group-item list-group-item-action bg-light">Upload</a>
-        <a class="list-group-item list-group-item-action bg-light">About</a>
-        <a class="list-group-item list-group-item-action bg-light">Donate</a>
-        <div class="fixed-bottom lockmargin" align="left">
-          <i class="material-icons">https</i>
+        <a class="list-group-item list-group-item-action bg-light" [routerLink]="['/upload']">Upload</a>
+        <a class="list-group-item list-group-item-action bg-light" [routerLink]="['/about']">About</a>
+        <a class="list-group-item list-group-item-action bg-light" [routerLink]="['/donate']">Donate</a>
+        <div *ngIf="!showAdminMenu" class="fixed-bottom lockmargin" align="left">
+          <button type="button" class="btn btn-outline-light" [routerLink]="['/login']">
+          <i class="material-icons text-dark">lock</i>
+        </button>
+        </div>
+        <div *ngIf="showAdminMenu" class="fixed-bottom lockmargin" align="left">
+          <button type="button" class="btn btn-outline-light">
+          <i class="material-icons text-dark">lock_open</i>
+        </button>
         </div>
       </div>
     </div>
-    <div class="col offset-2 container" id="main">
-      <h1>Main Area</h1>
+    <div class="col offset-2" id="main">
+      <router-outlet></router-outlet>
     </div>
   </div>
 </div>
+

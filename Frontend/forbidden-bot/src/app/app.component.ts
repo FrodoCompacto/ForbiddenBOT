@@ -1,3 +1,4 @@
+import { AuthService } from './login/auth.service';
 import { Component } from '@angular/core';
 
 @Component({
@@ -6,5 +7,15 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'forbidden-bot';
+  title = 'Forbidden Bot';
+
+  showAdminMenu: boolean = false;
+
+  constructor(private authService :AuthService){}
+
+  ngOnInit(){
+    this.authService.userAuthenticated.subscribe(
+        showMenu => this.showAdminMenu = showMenu
+    );
+  }
 }
