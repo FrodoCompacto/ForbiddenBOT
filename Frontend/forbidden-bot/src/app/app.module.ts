@@ -3,10 +3,18 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { UploadComponent } from './upload/upload.component';
+import { AboutComponent } from './about/about.component';
+import { DonateComponent } from './donate/donate.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    UploadComponent,
+    AboutComponent,
+    DonateComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
