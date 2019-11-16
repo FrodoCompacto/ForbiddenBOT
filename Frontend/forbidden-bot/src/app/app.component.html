@@ -1,10 +1,28 @@
-<button type="button" class="btn btn-primary">Primary</button>
-<button type="button" class="btn btn-secondary">Secondary</button>
-<button type="button" class="btn btn-success">Success</button>
-<button type="button" class="btn btn-danger">Danger</button>
-<button type="button" class="btn btn-warning">Warning</button>
-<button type="button" class="btn btn-info">Info</button>
-<button type="button" class="btn btn-light">Light</button>
-<button type="button" class="btn btn-dark">Dark</button>
+<link
+  href="https://fonts.googleapis.com/icon?family=Material+Icons"
+  rel="stylesheet"
+/>
 
-<button type="button" class="btn btn-link">Link</button>
+<div class="container-fluid">
+  <div class="row">
+    <div
+      class="col-2 px-1 bg-light position-fixed border-right h-100"
+      align="center"
+      id="sticky-sidebar"
+    >
+      <div class="list-group list-group-flush">
+        <a class="list-group-item list-group-item-action bg-light">Upload</a>
+        <a class="list-group-item list-group-item-action bg-light">About</a>
+        <a class="list-group-item list-group-item-action bg-light">Donate</a>
+        <div class="fixed-bottom lockmargin" align="left">
+          <i class="material-icons">
+            https
+          </i>
+        </div>
+      </div>
+    </div>
+    <div class="col offset-2 container" id="main">
+      <h1>Main Area</h1>
+    </div>
+  </div>
+</div>
