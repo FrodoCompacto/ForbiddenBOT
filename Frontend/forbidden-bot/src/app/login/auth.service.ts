@@ -1,7 +1,7 @@
 import { User } from "./../models/user";
 import { take } from 'rxjs/operators';
 import { Injectable, EventEmitter } from "@angular/core";
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
@@ -11,14 +11,14 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
 
-  private readonly API = `${environment.API}login`;
+  private readonly API = environment.API;
   userAuthenticated = new EventEmitter<boolean>();
   
 
   constructor(private http: HttpClient, private router: Router) {}
 
   authUser(user: User): Observable<any> {
-    return this.http.post(this.API, user,
+    return this.http.post(`${this.API}login`, user,
       {
         observe: 'response',
         responseType: 'text'
@@ -36,5 +36,16 @@ export class AuthService {
   logout(){
     sessionStorage.removeItem("token");
     this.userAuthenticated.emit(false);
+  }
+
+  refresh(token:string):Observable<any>{
+    let authHeader = new HttpHeaders({
+      'Content-Type':  'application/json',
+      'Authorization': 'Bearer ' + token});
+
+    return this.http.post(`${this.API}auth/refresh_token`, {}
+    ,{
+      'headers': authHeader, observe: "response"}
+    ).pipe(take(1));
   }
 }

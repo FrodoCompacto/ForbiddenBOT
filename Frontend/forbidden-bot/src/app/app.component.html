@@ -13,7 +13,9 @@
       <div class="list-group list-group-flush">
         <a class="list-group-item list-group-item-action bg-light" [routerLink]="['/upload']">Upload</a>
         <a class="list-group-item list-group-item-action bg-light" [routerLink]="['/about']">About</a>
-        <a class="list-group-item list-group-item-action bg-light" [routerLink]="['/donate']">Donate</a>
+        <a *ngIf="showAdminMenu" class="list-group-item list-group-item-dark menumargin" [routerLink]="['/donate']">Verify</a>
+        <a *ngIf="showAdminMenu" class="list-group-item list-group-item-dark" [routerLink]="['/about']">List</a>
+        <a *ngIf="showAdminMenu" class="list-group-item list-group-item-danger" [routerLink]="['/about']" (click)="onLogout()">Logout</a>
         <div *ngIf="!showAdminMenu" class="fixed-bottom lockmargin" align="left">
           <button type="button" class="btn btn-outline-light" [routerLink]="['/login']">
           <i class="material-icons text-dark">lock</i>

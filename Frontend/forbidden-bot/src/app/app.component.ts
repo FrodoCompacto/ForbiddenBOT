@@ -9,7 +9,7 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'Forbidden Bot';
 
-  showAdminMenu: boolean = false;
+  public showAdminMenu: boolean = false;
 
   constructor(private authService :AuthService){}
 
@@ -17,5 +17,19 @@ export class AppComponent {
     this.authService.userAuthenticated.subscribe(
         showMenu => this.showAdminMenu = showMenu
     );
+    this.verifyUser();
+  }
+
+  verifyUser(){
+    let token = sessionStorage.getItem("token");
+    if (!this.showAdminMenu && token != null ){
+      this.authService.refresh(token).subscribe(response => {
+        this.authService.successfulLogin(response.headers.get('Authorization'));
+      });
+    }
+  }
+
+  onLogout(){
+    this.authService.logout();
   }
 }
