@@ -1,16 +1,19 @@
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { AdminComponent } from './admin.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { AdminRoutingModule } from './admin-routing.module';
+import { ListComponent } from './list/list.component';
 import { VerifyComponent } from './verify/verify.component';
-import { ListsComponent } from './lists/lists.component';
 
 
 @NgModule({
-  declarations: [VerifyComponent, ListsComponent],
+  declarations: [AdminComponent, ListComponent, VerifyComponent],
   imports: [
     CommonModule,
-    AdminRoutingModule
+    AdminRoutingModule,
+    BsDropdownModule.forRoot()
   ]
 })
 export class AdminModule { }

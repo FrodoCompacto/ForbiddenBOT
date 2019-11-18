@@ -1,5 +1,6 @@
 import { AuthService } from './login/auth.service';
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -9,27 +10,32 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'Forbidden Bot';
 
-  public showAdminMenu: boolean = false;
+  public status: String = 'processing';
 
-  constructor(private authService :AuthService){}
+  constructor(private authService :AuthService, private router: Router){}
 
   ngOnInit(){
-    this.authService.userAuthenticated.subscribe(
-        showMenu => this.showAdminMenu = showMenu
+    this.authService.userAuthenticatedEmitter.subscribe(
+        showMenu => {if (showMenu) {
+          this.status = "logged";
+        } else this.status = "unlogged";
+      }
     );
     this.verifyUser();
   }
 
   verifyUser(){
     let token = sessionStorage.getItem("token");
-    if (!this.showAdminMenu && token != null ){
+    if (status != "logged" && token != null ){
       this.authService.refresh(token).subscribe(response => {
         this.authService.successfulLogin(response.headers.get('Authorization'));
+        this.status = "logged";
       });
-    }
+    } else setTimeout(() => this.status = "unlogged", 1000);
   }
 
   onLogout(){
     this.authService.logout();
+    this.status = "unlogged";
   }
 }

@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  API: 'https://forbidden-bot.herokuapp.com/'
+  API: 'http://localhost:8080/'
+  // API: 'https://forbidden-bot.herokuapp.com/'
 };
 
 /*

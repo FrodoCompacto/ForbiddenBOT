@@ -11,6 +11,8 @@ import { UploadComponent } from './upload/upload.component';
 import { AboutComponent } from './about/about.component';
 import { DonateComponent } from './donate/donate.component';
 import { LoginComponent } from './login/login.component';
+import { AuthGuard } from './guards/auth.guard';
+
 
 @NgModule({
   declarations: [
@@ -25,10 +27,9 @@ import { LoginComponent } from './login/login.component';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    ModalModule.forRoot(),
-    
+    ModalModule.forRoot()
   ],
-  providers: [AuthService],
+  providers: [AuthService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
