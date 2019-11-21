@@ -1,1 +1,77 @@
-<p>verify works!</p>
+<div class="container" align="center">
+        <br/>
+    <div *ngIf="selectMenu">
+      <div class="btn-group" dropdown>
+        <button
+          id="button-basic"
+          dropdownToggle
+          type="button"
+          class="btn btn-dark dropdown-toggle"
+        >
+          Verify <span class="caret"></span>
+        </button>
+        <ul
+          id="dropdown-basic"
+          *dropdownMenu
+          class="dropdown-menu"
+          role="menu"
+          aria-labelledby="button-basic"
+        >
+          <li role="menuitem">
+            <button class="btn dropdown-item" (click)="getUnverifiedArms(0);type = 'ARMS'">
+              Arms
+            </button>
+          </li>
+          <li role="menuitem">
+            <button class="btn dropdown-item" (click)="getUnverifiedLegs(0);type = 'LEGS'">
+              Legs
+            </button>
+          </li>
+          <li role="menuitem">
+            <button class="btn dropdown-item" (click)="getUnverifiedHeads(0);type = 'HEADS'">
+              Heads
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="row" align="center" style="margin-left: 90px;">
+    <div *ngFor="let card of partsArray" >
+      <div class="card mb-3 margin" style="max-width: 340px;">
+        <div class="row no-gutters">
+          <div class="col-md-4">
+            <img
+              [src]="card.image"
+              class="card-img"
+              alt="Card {{ card.id }} cannot be displayed."
+            />
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title">Uploader: {{ card.uploader }}</h5>
+              <p class="card-text">
+                <input type="checkbox" class="form-check-input" id="checkver" (change)="card.isVerified = !card.isVerified">
+                <label class="form-check-label" for="checkver">Verify</label></p>
+              <p class="card-text">
+                <small class="text-muted">{{
+                  returnOrientation(card.isLeftOriented)
+                }}</small>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container fixed-bottom" *ngIf="!selectMenu">
+      <nav aria-label="pagenav">
+          <ul class="pagination">
+            <li class="page-item"><button class="page-link" (click)="changePage(actualPage-1)">Previous</button></li>
+            <li *ngFor="let page of pages; let i = index" class="page-item"><button class="page-link" (click)="changePage(i)">{{i + 1}}</button></li>
+            <li class="page-item"><button class="page-link"(click)="changePage(actualPage+1)">Next</button></li>
+            <li class="page-item"><button class="page-link"(click)="verify()">Verify</button></li>
+          </ul>
+        </nav>
+  </div>

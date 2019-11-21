@@ -18,4 +18,13 @@ public interface ExodiaPartRepository extends JpaRepository<ExodiaPart, Integer>
 	@Query("SELECT obj FROM ExodiaPart obj WHERE obj.isVerified = TRUE")
 	Page<ExodiaPart> findVerified(Pageable pageRequest);
 	
+	@Query("SELECT obj FROM ExodiaPart obj WHERE obj.isVerified = FALSE and obj.type = 1")
+	Page<ExodiaPart> findUnverifiedArms(Pageable pageRequest);
+	
+	@Query("SELECT obj FROM ExodiaPart obj WHERE obj.isVerified = FALSE and obj.type = 2")
+	Page<ExodiaPart> findUnverifiedLegs(Pageable pageRequest);
+	
+	@Query("SELECT obj FROM ExodiaPart obj WHERE obj.isVerified = FALSE and obj.type = 3")
+	Page<ExodiaPart> findUnverifiedHeads(Pageable pageRequest);
+	
 }

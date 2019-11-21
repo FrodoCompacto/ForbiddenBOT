@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.validator.constraints.Length;
 
@@ -18,9 +17,6 @@ import io.forbiddenbot.services.validation.ExodiaPartInsert;
 public class ExodiaPartNewDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	private Integer id;
-	@NotEmpty(message="Required field.")
-	private String image;
 	@Length(min=0, max=15, message="Max characters: 15")
 	private String uploader;
 	private String uploaderIp;
@@ -31,15 +27,6 @@ public class ExodiaPartNewDTO implements Serializable {
 	
 	
 	public ExodiaPartNewDTO() {
-	}
-
-
-	public String getImage() {
-		return image;
-	}
-
-	public void setImage(String image) {
-		this.image = image;
 	}
 
 	public String getUploader() {
@@ -75,20 +62,9 @@ public class ExodiaPartNewDTO implements Serializable {
 	}
 
 
-	public Integer getId() {
-		return id;
-	}
-
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-
 	public ExodiaPart toExodiaPart() {
 		ExodiaPart ex = new ExodiaPart();
 		ex.setId(null);
-		ex.setImage(this.image);
 		ex.setUploader(this.uploader);
 		ex.setUploaderIp(this.uploaderIp);
 		ex.setUploadDate(new Date());

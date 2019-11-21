@@ -30,6 +30,9 @@ export class AppComponent {
       this.authService.refresh(token).subscribe(response => {
         this.authService.successfulLogin(response.headers.get('Authorization'));
         this.status = "logged";
+      },
+      error => {
+        this.status = "unlogged";
       });
     } else setTimeout(() => this.status = "unlogged", 1000);
   }

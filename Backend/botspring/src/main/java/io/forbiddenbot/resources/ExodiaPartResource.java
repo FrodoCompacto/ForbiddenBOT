@@ -3,6 +3,7 @@ package io.forbiddenbot.resources;
 
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,24 +43,25 @@ public class ExodiaPartResource {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> insert(@Valid @RequestBody ExodiaPartNewDTO exDTO) {
+	public ResponseEntity<Void> insert(@Valid @RequestBody ExodiaPartNewDTO exDTO, MultipartFile img) {
 		ExodiaPart ex = exDTO.toExodiaPart();
 		ex = service.insert(ex);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(ex.getId()).toUri();
+		service.uploadExodiaImage(img);
 
 		return ResponseEntity.created(uri).build();
 
 	}
 	
-	@RequestMapping(value = "/verify/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Void> update(@PathVariable Integer id){
-		service.verify(id);
+	@RequestMapping(value = "/verify", method = RequestMethod.PUT)
+	public ResponseEntity<Void> update(@RequestBody ArrayList<Integer> idList){
+		service.verify(idList);
 		return ResponseEntity.noContent().build();
 	}
 	
-	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<Void> delete(@PathVariable Integer id) {
-		service.delete(id);
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	public ResponseEntity<Void> delete(@RequestBody ArrayList<Integer> idList) {
+		service.delete(idList);
 		return ResponseEntity.noContent().build();
 	}
 	
@@ -103,6 +105,42 @@ public class ExodiaPartResource {
 			@RequestParam(name="direction", defaultValue="DESC") String direction) {
 
 		Page<ExodiaPart> pageEx = service.findVerified(page, linesPerPage, orderBy, direction);
+		Page<ExodiaPartDTO> listDto = pageEx.map(obj -> new ExodiaPartDTO(obj));
+		return ResponseEntity.ok().body(listDto);
+	}
+	
+	@RequestMapping(value="/unverified/arms", method = RequestMethod.GET)
+	public ResponseEntity<Page<ExodiaPartDTO>> findUnverifiedArms(
+			@RequestParam(name="page", defaultValue="0") Integer page, 
+			@RequestParam(name="linesPerPage", defaultValue="24") Integer linesPerPage, 
+			@RequestParam(name="orderBy", defaultValue="uploadDate") String orderBy, 
+			@RequestParam(name="direction", defaultValue="DESC") String direction) {
+
+		Page<ExodiaPart> pageEx = service.findUnverifiedArms(page, linesPerPage, orderBy, direction);
+		Page<ExodiaPartDTO> listDto = pageEx.map(obj -> new ExodiaPartDTO(obj));
+		return ResponseEntity.ok().body(listDto);
+	}
+	
+	@RequestMapping(value="/unverified/legs", method = RequestMethod.GET)
+	public ResponseEntity<Page<ExodiaPartDTO>> findUnverifiedLegs(
+			@RequestParam(name="page", defaultValue="0") Integer page, 
+			@RequestParam(name="linesPerPage", defaultValue="24") Integer linesPerPage, 
+			@RequestParam(name="orderBy", defaultValue="uploadDate") String orderBy, 
+			@RequestParam(name="direction", defaultValue="DESC") String direction) {
+
+		Page<ExodiaPart> pageEx = service.findUnverifiedLegs(page, linesPerPage, orderBy, direction);
+		Page<ExodiaPartDTO> listDto = pageEx.map(obj -> new ExodiaPartDTO(obj));
+		return ResponseEntity.ok().body(listDto);
+	}
+	
+	@RequestMapping(value="/unverified/heads", method = RequestMethod.GET)
+	public ResponseEntity<Page<ExodiaPartDTO>> findUnverifiedHeads(
+			@RequestParam(name="page", defaultValue="0") Integer page, 
+			@RequestParam(name="linesPerPage", defaultValue="24") Integer linesPerPage, 
+			@RequestParam(name="orderBy", defaultValue="uploadDate") String orderBy, 
+			@RequestParam(name="direction", defaultValue="DESC") String direction) {
+
+		Page<ExodiaPart> pageEx = service.findUnverifiedHeads(page, linesPerPage, orderBy, direction);
 		Page<ExodiaPartDTO> listDto = pageEx.map(obj -> new ExodiaPartDTO(obj));
 		return ResponseEntity.ok().body(listDto);
 	}

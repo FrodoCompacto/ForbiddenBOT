@@ -1,36 +1,4 @@
-<div class="container" align="center">
-  <div *ngIf="selectMenu">
-    <br />
-    <div class="btn-group" dropdown>
-      <button
-        id="button-basic"
-        dropdownToggle
-        type="button"
-        class="btn btn-dark dropdown-toggle"
-      >
-        Show <span class="caret"></span>
-      </button>
-      <ul
-        id="dropdown-basic"
-        *dropdownMenu
-        class="dropdown-menu"
-        role="menu"
-        aria-labelledby="button-basic"
-      >
-        <li role="menuitem">
-          <button class="btn dropdown-item" (click)="getVerifiedParts()">
-            Verified
-          </button>
-        </li>
-        <li role="menuitem">
-          <button class="btn dropdown-item" (click)="getUnverifiedParts()">
-            Unverified
-          </button>
-        </li>
-      </ul>
-    </div>
-  </div>
-</div>
+<br>
 <div class="row" align="center"style="margin-left: 90px;">
   <div *ngFor="let card of partsArray" >
     <div class="card mb-3 margin" style="max-width: 340px;">
@@ -56,4 +24,14 @@
       </div>
     </div>
   </div>
+</div>
+
+<div class="container fixed-bottom" *ngIf="!selectMenu">
+  <nav aria-label="pagenav">
+      <ul class="pagination">
+        <li class="page-item"><button class="page-link" (click)="changePage(actualPage-1)">Previous</button></li>
+        <li *ngFor="let page of pages; let i = index" class="page-item"><button class="page-link" (click)="changePage(i)">{{i + 1}}</button></li>
+        <li class="page-item"><button class="page-link"(click)="changePage(actualPage+1)">Next</button></li>
+      </ul>
+    </nav>
 </div>

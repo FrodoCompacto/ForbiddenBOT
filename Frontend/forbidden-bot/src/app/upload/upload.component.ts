@@ -1,3 +1,4 @@
+import { NewExodiaPart } from './../models/newexodiapart';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UploadComponent implements OnInit {
 
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  login(form: FormGroup, templateSuccess: TemplateRef<any>, templateFail: TemplateRef<any>) {
+  
   }
 
 }

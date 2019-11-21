@@ -1,52 +1,46 @@
-import { ExodiaPart } from './../../models/exodiapart';
-import { GetService } from './../get.service';
-import { Component, OnInit } from '@angular/core';
+import { ExodiaPart } from "./../../models/exodiapart";
+import { GetService } from "./../get.service";
+import { Component, OnInit } from "@angular/core";
 
 @Component({
-  selector: 'app-list',
-  templateUrl: './list.component.html',
-  styleUrls: ['./list.component.scss']
+  selector: "app-list",
+  templateUrl: "./list.component.html",
+  styleUrls: ["./list.component.scss"]
 })
 export class ListComponent implements OnInit {
-
-  constructor(private getService: GetService) { }
+  constructor(private getService: GetService) {}
   public partsArray: Array<ExodiaPart>;
   public pages: Array<number>;
-  
-  public selectMenu:boolean = true;
+  public actualPage: number = 0;
+
+  public selectMenu: boolean = true;
 
   ngOnInit() {
+    this.getVerifiedParts(0);
   }
 
-  getUnverifiedParts(){
-    this.getService.getUnverifiedParts(0,20).subscribe(
-      data=>{
-        this.partsArray = data['content'];
-        this.pages = new Array(data['totalPages']);
+  getVerifiedParts(page: number) {
+    this.getService.getVerifiedParts(page, 20).subscribe(
+      data => {
+        this.partsArray = data["content"];
+        this.pages = new Array(data["totalPages"]);
         this.selectMenu = false;
       },
-      error=>{
+      error => {
         console.error(error);
       }
     );
   }
 
-  getVerifiedParts(){
-    this.getService.getVerifiedParts(0,20).subscribe(
-      data=>{
-        this.partsArray = data['content'];
-        this.pages = new Array(data['totalPages']);
-        this.selectMenu = false;
-      },
-      error=>{
-        console.error(error);
-      }
-    );
-  }
-
-  returnOrientation(leftOriented: boolean): string{
+  returnOrientation(leftOriented: boolean): string {
     if (leftOriented) return "Left Oriented";
     else return "Right Oriented";
   }
 
+  changePage(page: number) {
+    if (page >= 0 && page < this.pages.length) {
+      this.getVerifiedParts(page);
+      this.actualPage = page;
+    }
+  }
 }

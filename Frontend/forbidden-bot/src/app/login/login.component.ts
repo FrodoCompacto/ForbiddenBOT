@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
       this.authService.successfulLogin(response.headers.get('Authorization'));
       this.modalService.show(templateSuccess);
       this.router.navigate(['/upload']);
-    }, // success path
+    },
     error => {
       this.modalService.show(templateFail);
     }

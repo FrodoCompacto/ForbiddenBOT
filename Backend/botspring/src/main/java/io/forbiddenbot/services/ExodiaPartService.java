@@ -2,6 +2,7 @@ package io.forbiddenbot.services;
 
 import java.awt.image.BufferedImage;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,17 +50,21 @@ public class ExodiaPartService {
 		return repo.save(part);
 	}
 	
-	public void verify(Integer id) {
+	public void verify(ArrayList<Integer> idList) {
+		for(Integer id : idList) {
 		ExodiaPart ex = find(id);
 		repo.save(updateData(ex));
+		}
 	}
 	
-	public void delete(Integer id) {
-		find(id);
-		try {
-			repo.deleteById(id);
-		} catch (DataIntegrityViolationException e) {
-			throw new DataIntegrityException("It is not possible to exclude verified exodia parts.");
+	public void delete(ArrayList<Integer> idList) {
+		for(Integer id : idList) {
+			find(id);
+			try {
+				repo.deleteById(id);
+			} catch (DataIntegrityViolationException e) {
+				throw new DataIntegrityException("It is not possible to exclude verified exodia parts.");
+			}
 		}
 	}
 	
@@ -75,6 +80,21 @@ public class ExodiaPartService {
 	public Page<ExodiaPart> findUnverified(Integer page, Integer linesPerPage, String orderBy, String direction){
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		return repo.findUnverified(pageRequest);
+	}
+	
+	public Page<ExodiaPart> findUnverifiedArms(Integer page, Integer linesPerPage, String orderBy, String direction){
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		return repo.findUnverifiedArms(pageRequest);
+	}
+	
+	public Page<ExodiaPart> findUnverifiedLegs(Integer page, Integer linesPerPage, String orderBy, String direction){
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		return repo.findUnverifiedLegs(pageRequest);
+	}
+	
+	public Page<ExodiaPart> findUnverifiedHeads(Integer page, Integer linesPerPage, String orderBy, String direction){
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		return repo.findUnverifiedHeads(pageRequest);
 	}
 	
 	public Page<ExodiaPart> findVerified(Integer page, Integer linesPerPage, String orderBy, String direction){

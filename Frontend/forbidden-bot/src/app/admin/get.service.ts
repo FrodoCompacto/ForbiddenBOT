@@ -2,7 +2,8 @@ import { take, catchError } from 'rxjs/operators';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
-import { throwError, Observable } from 'rxjs';
+import { throwError, Observable, empty, of } from 'rxjs';
+import { ExodiaPart } from '../models/exodiapart';
 
 @Injectable({
   providedIn: 'root'
@@ -13,12 +14,31 @@ export class GetService {
 
   constructor(private http: HttpClient) {}
 
-  getUnverifiedParts(page: number = 0, linesPerPage: number = 24, orderBy:string = "uploadDate", direction: string = "DESC"): Observable<any> {
+  getUnverifiedArms(page: number, linesPerPage: number = 24, orderBy:string = "uploadDate", direction: string = "DESC"): Observable<any> {
+    let authHeader = new HttpHeaders({
+      'Authorization': 'Bearer ' + sessionStorage.getItem("token")});
+
+    return this.http.get(`${this.API}exodiaparts/unverified/arms?page=${page}&linesPerPage=${linesPerPage}&orderBy=${orderBy}&direction=${direction}`,{
+      'headers': authHeader})
+    .pipe(take(1),catchError(this.handleError));
+  }
+
+  getUnverifiedLegs(page: number = 0, linesPerPage: number = 24, orderBy:string = "uploadDate", direction: string = "DESC"): Observable<any> {
 
     let authHeader = new HttpHeaders({
       'Authorization': 'Bearer ' + sessionStorage.getItem("token")});
 
-    return this.http.get(`${this.API}exodiaparts/unverified?page=${page}&linesPerPage=${linesPerPage}&orderBy=${orderBy}&direction=${direction}`,{
+    return this.http.get(`${this.API}exodiaparts/unverified/legs?page=${page}&linesPerPage=${linesPerPage}&orderBy=${orderBy}&direction=${direction}`,{
+      'headers': authHeader})
+    .pipe(take(1),catchError(this.handleError));
+  }
+
+  getUnverifiedHeads(page: number = 0, linesPerPage: number = 24, orderBy:string = "uploadDate", direction: string = "DESC"): Observable<any> {
+
+    let authHeader = new HttpHeaders({
+      'Authorization': 'Bearer ' + sessionStorage.getItem("token")});
+
+    return this.http.get(`${this.API}exodiaparts/unverified/heads?page=${page}&linesPerPage=${linesPerPage}&orderBy=${orderBy}&direction=${direction}`,{
       'headers': authHeader})
     .pipe(take(1),catchError(this.handleError));
   }
@@ -31,6 +51,24 @@ export class GetService {
     return this.http.get(`${this.API}exodiaparts/verified?page=${page}&linesPerPage=${linesPerPage}&orderBy=${orderBy}&direction=${direction}`,{
       'headers': authHeader})
     .pipe(take(1),catchError(this.handleError));
+  }
+
+  verify(idList: Array<number>): Observable<any> {
+    let authHeader = new HttpHeaders({
+      'Authorization': 'Bearer ' + sessionStorage.getItem("token")});
+
+      return this.http.put(`${this.API}exodiaparts/verify`, idList,{
+        'headers': authHeader})
+      .pipe(take(1),catchError(this.handleError));
+  }
+
+  delete(idList: Array<number>): Observable<any> {
+    let authHeader = new HttpHeaders({
+      'Authorization': 'Bearer ' + sessionStorage.getItem("token")});
+
+      return this.http.post(`${this.API}exodiaparts/delete`, idList,{
+        'headers': authHeader})
+      .pipe(take(1),catchError(this.handleError));
   }
 
   private handleError(error: HttpErrorResponse) {
