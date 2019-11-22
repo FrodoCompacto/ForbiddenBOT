@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
-  login(form: FormGroup, templateSuccess: TemplateRef<any>, templateFail: TemplateRef<any>) {
+  login(form, templateSuccess: TemplateRef<any>, templateFail: TemplateRef<any>) {
     this.processing = true;
     let user: User = form.value;
     this.authService.authUser(user).subscribe(response => {

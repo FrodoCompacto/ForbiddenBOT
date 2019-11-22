@@ -14,11 +14,9 @@
           <div class="card-body">
             <h5 class="card-title">Uploader: {{ card.uploader }}</h5>
             <p class="card-text">Type: {{ card.type }}</p>
-            <p class="card-text">
-              <small class="text-muted">{{
-                returnOrientation(card.isLeftOriented)
-              }}</small>
-            </p>
+           <p class="card-text">
+              <small class="text-muted">{{ card.uploadDate }}</small>
+            </p> 
           </div>
         </div>
       </div>
@@ -26,7 +24,7 @@
   </div>
 </div>
 
-<div class="container fixed-bottom" *ngIf="!selectMenu">
+<div class="container fixed-bottom">
   <nav aria-label="pagenav">
       <ul class="pagination">
         <li class="page-item"><button class="page-link" (click)="changePage(actualPage-1)">Previous</button></li>

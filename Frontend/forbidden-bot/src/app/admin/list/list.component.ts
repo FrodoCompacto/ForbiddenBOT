@@ -40,11 +40,6 @@ export class ListComponent implements OnInit {
     );
   }
 
-  returnOrientation(leftOriented: boolean): string {
-    if (leftOriented) return "Left Oriented";
-    else return "Right Oriented";
-  }
-
   changePage(page: number) {
     if (page >= 0 && page < this.pages.length) {
       this.getVerifiedParts(page);
