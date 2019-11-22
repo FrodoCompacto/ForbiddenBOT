@@ -33,19 +33,19 @@ public class DBService {
 		Admin adm1 = new Admin(null, "fb.com/jvfaggion", "eumesmo", pe.encode("euman123"));
 		Admin adm2 = new Admin(null, "fb.com/teste", "aaaa", pe.encode("bbbbb"));
 
-		ExodiaPart ex1 = new ExodiaPart(null, "image path", "Frodo", "192.168.1.1", new Date(), PartType.HEAD, true,
+		ExodiaPart ex1 = new ExodiaPart(null, "image path", "Frodo", new Date(), PartType.HEAD, 
 				false, null);
 
-		ExodiaPart ex2 = new ExodiaPart(null, "image path", "aaaa", "192.168.1.2", new Date(), PartType.HEAD, true,
+		ExodiaPart ex2 = new ExodiaPart(null, "image path", "aaaa", new Date(), PartType.HEAD, 
 				false, null);
 
-		ExodiaPart ex3 = new ExodiaPart(null, "image path", "bbbb", "192.168.1.3", new Date(), PartType.HEAD, true, false,
+		ExodiaPart ex3 = new ExodiaPart(null, "image path", "bbbb", new Date(), PartType.HEAD, false,
 				null);
 
-		ExodiaPart ex4 = new ExodiaPart(null, "image path", "ccccc", "192.168.1.4", new Date(), PartType.HEAD, true,
+		ExodiaPart ex4 = new ExodiaPart(null, "image path", "ccccc", new Date(), PartType.HEAD, 
 				false, null);
 
-		ExodiaPart ex5 = new ExodiaPart(null, "image path", "ddddd", "192.168.1.5", new Date(), PartType.HEAD, true,
+		ExodiaPart ex5 = new ExodiaPart(null, "image path", "ddddd", new Date(), PartType.HEAD, 
 				false, null);
 
 //		Forbidden f1 = new Forbidden(null, new Date());

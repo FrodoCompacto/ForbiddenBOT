@@ -1,6 +1,7 @@
 import { GetService } from './../get.service';
 import { ExodiaPart } from './../../models/exodiapart';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { BsModalService } from 'ngx-bootstrap';
 
 @Component({
   selector: 'app-verify',
@@ -9,7 +10,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class VerifyComponent implements OnInit {
 
-  constructor(private getService: GetService) { }
+  @ViewChild('modal', {static: false})
+  modal: ElementRef;
+
+  constructor(private getService: GetService, private modalService: BsModalService) { }
   public partsArray: Array<ExodiaPart>;
   public pages: Array<number>;
 
@@ -26,6 +30,10 @@ export class VerifyComponent implements OnInit {
         this.partsArray = data['content'];
         this.pages = new Array(data['totalPages']);
         this.selectMenu = false;
+        if (this.partsArray.length == 0) {
+          this.modalService.show(this.modal);
+          this.selectMenu = true;
+        }
       },
       error=>{
         console.error(error);
@@ -39,6 +47,10 @@ export class VerifyComponent implements OnInit {
         this.partsArray = data['content'];
         this.pages = new Array(data['totalPages']);
         this.selectMenu = false;
+        if (this.partsArray.length == 0) {
+          this.modalService.show(this.modal);
+          this.selectMenu = true;
+        }
       },
       error=>{
         console.error(error);
@@ -52,6 +64,10 @@ export class VerifyComponent implements OnInit {
         this.partsArray = data['content'];
         this.pages = new Array(data['totalPages']);
         this.selectMenu = false;
+        if (this.partsArray.length == 0) {
+          this.modalService.show(this.modal);
+          this.selectMenu = true;
+        }
       },
       error=>{
         console.error(error);

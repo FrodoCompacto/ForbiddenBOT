@@ -1,6 +1,7 @@
 package io.forbiddenbot.services;
 
 import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -10,6 +11,7 @@ import java.io.InputStream;
 import javax.imageio.ImageIO;
 
 import org.apache.commons.io.FilenameUtils;
+import org.imgscalr.Scalr;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -50,15 +52,18 @@ public class ImageService {
 			ImageIO.write(img, extension, os);
 			return new ByteArrayInputStream(os.toByteArray());
 		} catch (IOException e) {
-			throw new FileException("Erro ao ler arquivo");
+			throw new FileException("Failed to read file.");
 		}
 	}
 	
 	public BufferedImage decodeToImage(String imageString) {
 		boolean isPng = false;
 		
-		if (imageString.indexOf(";") == 14) isPng = true;
-		else if (imageString.indexOf(";") != 15) {
+		String ext = imageString.substring(11, imageString.indexOf(";"));
+		System.out.println(ext);
+		
+		if (ext.equalsIgnoreCase("png")) isPng = true;
+		else if (!ext.equalsIgnoreCase("jpeg")) {
 			throw new FileException("Invalid file extension.");
 		}
 		
@@ -80,5 +85,29 @@ public class ImageService {
 		
         return image;
     }
+	
+	public BufferedImage flip(BufferedImage img) {
+		int w = img.getWidth();
+        int h = img.getHeight();
+        BufferedImage flippedImage = new BufferedImage(w, h, img.getType());
+        Graphics2D g = flippedImage.createGraphics();
+        g.drawImage(img, 0, 0, w, h, w, 0, 0, h, null);
+        g.dispose();
+        return flippedImage;
+	}
+	
+	public BufferedImage cropSquare(BufferedImage sourceImg) {
+		int min = (sourceImg.getHeight() <= sourceImg.getWidth()) ? sourceImg.getHeight() : sourceImg.getWidth();
+		return Scalr.crop(
+			sourceImg, 
+			(sourceImg.getWidth()/2) - (min/2), 
+			(sourceImg.getHeight()/2) - (min/2), 
+			min, 
+			min);		
+	}
+	
+	public BufferedImage resize(BufferedImage sourceImg, int size) {
+		return Scalr.resize(sourceImg, Scalr.Method.ULTRA_QUALITY, size);
+	}
 	
 }

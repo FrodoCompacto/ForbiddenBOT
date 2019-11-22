@@ -28,11 +28,9 @@ public class ExodiaPart implements Serializable {
 	private Integer id;
 	private String image;
 	private String uploader;
-	private String uploaderIp;
 	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
 	private Date uploadDate;
 	private Integer type;
-	private Boolean isLeftOriented;
 	private Boolean isVerified;
 	
 	@ManyToOne
@@ -47,16 +45,13 @@ public class ExodiaPart implements Serializable {
 	
 	public ExodiaPart(){}
 
-	public ExodiaPart(Integer id, String image, String uploader, String uploaderIp, Date uploadDate, PartType type,
-			Boolean isLeftOriented, Boolean isVerified, Admin verifier) {
+	public ExodiaPart(Integer id, String image, String uploader, Date uploadDate, PartType type, Boolean isVerified, Admin verifier) {
 		super();
 		this.id = id;
 		this.image = image;
 		this.uploader = uploader;
-		this.uploaderIp = uploaderIp;
 		this.uploadDate = uploadDate;
 		this.type = type.getCod();
-		this.isLeftOriented = isLeftOriented;
 		this.isVerified = isVerified;
 		this.verifier = verifier;
 	}
@@ -85,28 +80,12 @@ public class ExodiaPart implements Serializable {
 		this.uploader = uploader;
 	}
 
-	public String getUploaderIp() {
-		return uploaderIp;
-	}
-
-	public void setUploaderIp(String uploaderIp) {
-		this.uploaderIp = uploaderIp;
-	}
-
 	public Date getUploadDate() {
 		return uploadDate;
 	}
 
 	public void setUploadDate(Date uploadDate) {
 		this.uploadDate = uploadDate;
-	}
-
-	public Boolean getIsLeftOriented() {
-		return isLeftOriented;
-	}
-
-	public void setIsLeftOriented(Boolean isLeftOriented) {
-		this.isLeftOriented = isLeftOriented;
 	}
 
 	public Boolean getIsVerified() {

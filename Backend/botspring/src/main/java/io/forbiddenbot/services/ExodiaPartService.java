@@ -9,6 +9,7 @@ import java.util.Optional;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,7 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import io.forbiddenbot.RowThread;
+//import io.forbiddenbot.RowThread;
 import io.forbiddenbot.domain.Admin;
 import io.forbiddenbot.domain.ExodiaPart;
 import io.forbiddenbot.repositories.ExodiaPartRepository;
@@ -40,6 +41,10 @@ public class ExodiaPartService {
 	@Autowired
 	private ExodiaPartRepository repo;
 	
+	@Value("${img.profile.size}")
+	private Integer size;
+	
+	
     private static final String CHAR_LOWER = "abcdefghijklmnopqrstuvwxyz";
     private static final String CHAR_UPPER = CHAR_LOWER.toUpperCase();
     private static final String NUMBER = "0123456789";
@@ -54,7 +59,7 @@ public class ExodiaPartService {
 	
 	@Transactional
 	public ExodiaPart insert(ExodiaPart part) {
-		RowThread.ipList.add(part.getUploaderIp());
+//		RowThread.ipList.add(part.getUploaderIp());
 		return repo.save(part);
 	}
 	
@@ -119,9 +124,12 @@ public class ExodiaPartService {
 		return newObj;
 	}
 	
-	public String parseImg(String strImg) {
+	public String parseImg(String strImg, boolean leftOriented) {
 		
 		BufferedImage jpgImage = imageService.decodeToImage(strImg);
+		jpgImage = imageService.cropSquare(jpgImage);
+		jpgImage = imageService.resize(jpgImage, size);
+		if (!leftOriented) jpgImage = imageService.flip(jpgImage);
 		String fileName = generateRandomString(8) + ".jpg";
 		
 		return s3Service.uploadFile(imageService.getInputStream(jpgImage, "jpg"),fileName, "image").toString();
@@ -131,9 +139,9 @@ public class ExodiaPartService {
 	public URI uploadExodiaImage(MultipartFile multiPartFile) {
 		
 		BufferedImage jpgImage = imageService.getJpgImageFromFile(multiPartFile);
-		String string = multiPartFile.getOriginalFilename().substring(0, multiPartFile.getOriginalFilename().length()-4);
-		String fileName = string + ".jpg";
-		
+		jpgImage = imageService.cropSquare(jpgImage);
+		jpgImage = imageService.resize(jpgImage, size);
+		String fileName = generateRandomString(8) + ".jpg";
 		
 		return s3Service.uploadFile(imageService.getInputStream(jpgImage, "jpg"), fileName, "image");
 	}

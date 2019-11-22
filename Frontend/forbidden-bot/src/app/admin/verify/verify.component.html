@@ -38,7 +38,7 @@
   </div>
   <div class="row" align="center" style="margin-left: 90px;">
     <div *ngFor="let card of partsArray" >
-      <div class="card mb-3 margin" style="max-width: 340px;">
+      <div class="card mb-3 margin clickable" style="max-width: 340px;" (click)="card.isVerified = !card.isVerified">
         <div class="row no-gutters">
           <div class="col-md-4">
             <img
@@ -50,14 +50,9 @@
           <div class="col-md-8">
             <div class="card-body">
               <h5 class="card-title">Uploader: {{ card.uploader }}</h5>
-              <p class="card-text">
+              <h5 class="card-text">
                 <input type="checkbox" class="form-check-input" id="checkver" (change)="card.isVerified = !card.isVerified">
-                <label class="form-check-label" for="checkver">Verify</label></p>
-              <p class="card-text">
-                <small class="text-muted">{{
-                  returnOrientation(card.isLeftOriented)
-                }}</small>
-              </p>
+                <label class="form-check-label" for="checkver">Verify</label></h5>
             </div>
           </div>
         </div>
@@ -75,3 +70,13 @@
           </ul>
         </nav>
   </div>
+
+
+  <ng-template #modal>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left text-danger">Empty</h4>
+    </div>
+    <div class="modal-body">
+      No elements to verify.
+    </div>
+  </ng-template>

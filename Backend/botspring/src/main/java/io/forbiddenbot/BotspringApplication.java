@@ -16,8 +16,8 @@ public class BotspringApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) {
 
-		RowThread thread = new RowThread();
-		thread.start();
+//		RowThread thread = new RowThread();
+//		thread.start();
 
 	}
 

@@ -45,7 +45,7 @@ public class ExodiaPartResource {
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Void> insert(@Valid @RequestBody ExodiaPartNewDTO exDTO) {
 		ExodiaPart ex = exDTO.toExodiaPart();
-		ex.setImage(service.parseImg(exDTO.getImageStr()));
+		ex.setImage(service.parseImg(exDTO.getImageStr(), exDTO.getIsLeftOriented()));
 		ex = service.insert(ex);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(ex.getId()).toUri();
 

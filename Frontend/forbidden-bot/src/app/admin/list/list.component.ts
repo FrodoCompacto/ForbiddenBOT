@@ -1,6 +1,8 @@
 import { ExodiaPart } from "./../../models/exodiapart";
 import { GetService } from "./../get.service";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
+import { BsModalService } from 'ngx-bootstrap';
+import { Router } from '@angular/router';
 
 @Component({
   selector: "app-list",
@@ -8,12 +10,15 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./list.component.scss"]
 })
 export class ListComponent implements OnInit {
-  constructor(private getService: GetService) {}
+  constructor(private getService: GetService, private modalService: BsModalService, private router:Router) {}
+
+  @ViewChild('modal', {static: false})
+  modal: ElementRef;
+
   public partsArray: Array<ExodiaPart>;
   public pages: Array<number>;
   public actualPage: number = 0;
 
-  public selectMenu: boolean = true;
 
   ngOnInit() {
     this.getVerifiedParts(0);
@@ -24,7 +29,10 @@ export class ListComponent implements OnInit {
       data => {
         this.partsArray = data["content"];
         this.pages = new Array(data["totalPages"]);
-        this.selectMenu = false;
+        if (this.partsArray.length == 0) {
+          this.modalService.show(this.modal);
+          this.router.navigate(['/admin/verify']);
+        }
       },
       error => {
         console.error(error);

@@ -1,9 +1,9 @@
 import { PostService } from './post.service';
 import { NewExodiaPart } from './../models/newexodiapart';
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild, ElementRef } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap';
-import { Router } from '@angular/router';
 import { PartType } from '../models/enums/parttype';
+
 
 @Component({
   selector: 'app-upload',
@@ -12,13 +12,16 @@ import { PartType } from '../models/enums/parttype';
 })
 export class UploadComponent implements OnInit {
 
+  @ViewChild('myInput', {static: false})
+  myInputVariable: ElementRef;
+
   public processing: boolean = false;
   public exPart: NewExodiaPart = new NewExodiaPart();
   public image;
   public message: String;
 
 
-  constructor(private modalService: BsModalService, private router: Router, private postService: PostService) { }
+  constructor(private modalService: BsModalService, private postService: PostService) { }
 
   ngOnInit() {
     this.exPart.isLeftOriented = false;
@@ -38,15 +41,13 @@ export class UploadComponent implements OnInit {
       this.modalService.show(templateFail);
     } else {
       this.processing = true;
-    this.postService.getIp().subscribe( data => {
-      this.exPart.uploaderIp = data.ip;
-    });
 
     this.postService.send(this.exPart).subscribe(response => {
       this.modalService.show(templateSuccess);
-      this.router.navigate(['/upload']);
       this.processing = false;
       this.exPart = new NewExodiaPart();
+      this.exPart.isLeftOriented = false;
+      this.myInputVariable.nativeElement.value = "";
     },
     error => {
       this.message = "Request not sent, please try again.";
@@ -56,9 +57,6 @@ export class UploadComponent implements OnInit {
     );
   }
   }
-
-
-
 
 changeListener($event) : void {
   this.readThis($event.target);
@@ -73,5 +71,11 @@ readThis(inputValue: any): void {
   }
   myReader.readAsDataURL(file);
 } 
+
+resetOrientation(){
+  if ( this.exPart.type == PartType.HEAD ){
+    this.exPart.isLeftOriented == true;
+  }
+}
 
 }

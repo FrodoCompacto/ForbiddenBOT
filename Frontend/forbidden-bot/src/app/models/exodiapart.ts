@@ -7,7 +7,6 @@ export class ExodiaPart {
   public uploader: string;
   public uploadDate: string;
   public type: PartType;
-  public isLeftOriented: boolean;
   public isVerified: boolean;
 
 }
