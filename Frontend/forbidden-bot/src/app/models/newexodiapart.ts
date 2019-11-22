@@ -6,6 +6,9 @@ export class NewExodiaPart {
   public uploaderIp: string;
   public type: PartType;
   public isLeftOriented: boolean;
+  public imageStr: string;
 
+  public NewExodiaPart(){
+  }
 }
 

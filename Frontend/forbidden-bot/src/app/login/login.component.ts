@@ -2,7 +2,7 @@ import { User } from './../models/user';
 import { AuthService } from './auth.service';
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap';
+import { BsModalService } from 'ngx-bootstrap';
 import { Router } from '@angular/router';
 
 @Component({

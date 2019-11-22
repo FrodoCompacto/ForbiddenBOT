@@ -1,25 +1,120 @@
-<br>
-<div class="col-4">
-  <form>
-    <div class="form-group">
-      <label for="inputNick">Uploader</label>
-      <input
-        type="text"
-        class="form-control"
-        id="inputNick"
-        aria-describedby="nickHelp"
-        placeholder="Optional"
-      />
-      <small id="nickHelp" class="form-text text-muted"
-        >Put your name or nickname.</small
+<br />
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+      <div class="form-group">
+        <label for="inputNick">Uploader</label>
+        <input
+          type="text"
+          class="form-control"
+          id="uploader"
+          aria-describedby="nickHelp"
+          placeholder="Optional"
+          [(ngModel)]="exPart.uploader"
+        />
+        <small id="nickHelp" class="form-text text-muted"
+          >Put your name or nickname.</small
+        >
+      </div>
+
+      <br> 
+      <div class="form-group">
+          <label class="form-check-label">
+              Part Type
+            </label>
+      <div class="form-check">
+          <input class="form-check-input" type="radio" name="radios" id="radio1" value="1" [(ngModel)]="exPart.type">
+          <label class="form-check-label" for="radio1">
+            Arm of the Forbidden One
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="radios" id="radio2" value="2" [(ngModel)]="exPart.type">
+          <label class="form-check-label" for="radio2">
+            Leg of the Forbidden One
+          </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="radios" id="radio3" value="3" [(ngModel)]="exPart.type">
+            <label class="form-check-label" for="radio3">
+            Head of the Forbidden One
+            </label>
+          </div>
+          <small id="typehelp" class="form-text text-muted"
+          >Select part type.</small
+        >
+          </div>
+      
+      <div class="form-group">
+      <label class="form-check-label" for="check" [ngClass]="{'text-muted': !(exPart.type == 1 || exPart.type == 2)}">
+          Left Oriented
+        </label>
+      
+        <input
+          style="margin-left: 10px;"
+          type="checkbox"
+          id="check"
+          [(ngModel)]="exPart.isLeftOriented"
+          [disabled]="!(exPart.type == 1 || exPart.type == 2)"
+        />
+
+        <small id="checkhelp" class="form-text text-muted"
+          >Check if it is the left leg or arm.</small
+        >
+        
+      </div>
+     
+      <div class="form-group">
+        <label for="exampleFormControlFile1">Card Image</label>
+        <input
+          type="file"
+          id="exampleFormControlFile1"
+          class="form-control-file"
+          accept="image/*"
+          (change)="changeListener($event)"
+        />
+        <small id="imgh" class="form-text text-muted"
+          >Only .jpg or .png files.</small
+        >
+      </div>
+      <br>
+      <br>
+
+      <div class="form-group" align="center">
+      <button
+        class="btn btn-dark" 
+        (click)="send(templateSuccess, templateFail)"
       >
+        Submit
+      </button>
+      <small id="subhelp" class="form-text text-muted"
+          >Please check the orientation of your piece before submitting.</small
+        >
+        <br>
+        <div *ngIf="processing"><div class="spinner-border" role="status"></div></div>
     </div>
+  </div>
 
-    
-
-    <div class="form-group">
-      <label for="exampleFormControlFile1">Card Image</label>
-      <input type="file" class="form-control-file" id="imgInput" />
+    <div class="col-sm">
+      <p>saaa</p>
     </div>
-  </form>
+  </div>
 </div>
+
+<ng-template #templateSuccess>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left text-success">Sucess!</h4>
+  </div>
+  <div class="modal-body">
+    Sent!
+  </div>
+</ng-template>
+
+<ng-template #templateFail>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left text-danger">Failure</h4>
+  </div>
+  <div class="modal-body">
+    {{ message }}
+  </div>
+</ng-template>

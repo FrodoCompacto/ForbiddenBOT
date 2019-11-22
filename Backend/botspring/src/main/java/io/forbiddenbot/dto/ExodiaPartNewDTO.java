@@ -23,6 +23,8 @@ public class ExodiaPartNewDTO implements Serializable {
 	@Min(value = 0,message = "Type must be ARM, LEG or HEAD.")
 	private Integer type;
 	private Boolean isLeftOriented;
+	private String imageStr;
+	
 	
 	
 	
@@ -37,12 +39,12 @@ public class ExodiaPartNewDTO implements Serializable {
 		this.uploader = uploader;
 	}
 
-	public PartType getType() {
-		return PartType.toEnum(type);
+	public Integer getType() {
+		return type;
 	}
 
-	public void setType(PartType type) {
-		this.type = type.getCod();
+	public void setType(Integer type) {
+		this.type = type;
 	}
 
 	public Boolean getIsLeftOriented() {
@@ -68,12 +70,20 @@ public class ExodiaPartNewDTO implements Serializable {
 		ex.setUploader(this.uploader);
 		ex.setUploaderIp(this.uploaderIp);
 		ex.setUploadDate(new Date());
-		ex.setType(this.getType());
+		ex.setType(PartType.toEnum(this.getType()));
 		ex.setIsLeftOriented(this.isLeftOriented);
 		ex.setIsVerified(false);
 		ex.setVerifier(null);
 		ex.setSourceFor(new ArrayList<>());
 		return ex;
+	}
+
+	public String getImageStr() {
+		return imageStr;
+	}
+
+	public void setImageStr(String imageStr) {
+		this.imageStr = imageStr;
 	}
 
 

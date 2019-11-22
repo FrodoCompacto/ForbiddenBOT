@@ -13,6 +13,8 @@ import org.apache.commons.io.FilenameUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Base64;
+
 import io.forbiddenbot.services.exceptions.FileException;
 
 @Service
@@ -51,5 +53,32 @@ public class ImageService {
 			throw new FileException("Erro ao ler arquivo");
 		}
 	}
+	
+	public BufferedImage decodeToImage(String imageString) {
+		boolean isPng = false;
+		
+		if (imageString.indexOf(";") == 14) isPng = true;
+		else if (imageString.indexOf(";") != 15) {
+			throw new FileException("Invalid file extension.");
+		}
+		
+		imageString = imageString.substring(imageString.indexOf(",")+1);
+		
+        BufferedImage image = null;
+        byte[] imageByte;
+        try {
+            imageByte = Base64.getDecoder().decode(imageString);
+            ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
+            image = ImageIO.read(bis);
+            bis.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        
+        if (isPng) image = pngToJpg(image);
+		
+        return image;
+    }
 	
 }
