@@ -36,6 +36,9 @@ export class UploadComponent implements OnInit {
     } else if ( this.exPart.type != PartType.HEAD && this.exPart.isLeftOriented == null) {
       this.message = "An arm or leg should be oriented.";
       this.modalService.show(templateFail);
+    } else if ( this.exPart.uploader != null && this.exPart.uploader.length > 15) {
+      this.message = "Nickname must be 15 characters or less.";
+      this.modalService.show(templateFail);
     } else if ( !this.exPart.imageStr ){
       this.message = "Please select an valid image.";
       this.modalService.show(templateFail);

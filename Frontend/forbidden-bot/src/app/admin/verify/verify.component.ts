@@ -104,7 +104,9 @@ export class VerifyComponent implements OnInit {
           this.changePage(this.actualPage);
         }
       );
-  }
+  } else if (delList.length > 0) this.getService.delete(delList).subscribe( x => {
+    this.changePage(this.actualPage);
+  });
   }
 
 }
