@@ -50,10 +50,12 @@ public class ExodiaPartResource {
 	
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Void> insert(@Valid @RequestBody ExodiaPartNewDTO exDTO) {
+		
 		Boolean isValidCaptcha = captchaValidator.validateCaptcha(exDTO.getCaptchaResponse()); 
+
 	    if(!isValidCaptcha){
 	        throw new ForbiddenException("Captcha is not valid");
-	    }
+	    } else {
 		
 		ExodiaPart ex = exDTO.toExodiaPart();
 		ex.setImage(service.parseImg(exDTO.getImageStr(), exDTO.getIsLeftOriented()));
@@ -61,6 +63,7 @@ public class ExodiaPartResource {
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(ex.getId()).toUri();
 
 		return ResponseEntity.created(uri).build();
+	    }
 
 	}
 	

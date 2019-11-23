@@ -13,13 +13,20 @@ public class CaptchaResponse {
     @JsonProperty("error-codes")
     private List<String> errorCodes;
     
-    public CaptchaResponse(Boolean success, Date timestamp, String hostname, List<String> errorCodes) {
-        this.success = success;
-        this.timestamp = timestamp;
-        this.hostname = hostname;
-        this.errorCodes = errorCodes;
-    }
     
+    
+    public CaptchaResponse() {
+		super();
+	}
+    
+	public CaptchaResponse(Boolean success, Date timestamp, String hostname, List<String> errorCodes) {
+		super();
+		this.success = success;
+		this.timestamp = timestamp;
+		this.hostname = hostname;
+		this.errorCodes = errorCodes;
+	}
+
 	public Boolean getSuccess() {
 		return success;
 	}
