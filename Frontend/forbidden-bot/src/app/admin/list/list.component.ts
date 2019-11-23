@@ -1,3 +1,4 @@
+import { DelList } from './../../models/delList';
 import { ExodiaPart } from "./../../models/exodiapart";
 import { GetService } from "./../get.service";
 import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
@@ -15,10 +16,10 @@ export class ListComponent implements OnInit {
   @ViewChild('modal', {static: false})
   modal: ElementRef;
 
-  public partsArray: Array<ExodiaPart>;
   public pages: Array<number>;
   public actualPage: number = 0;
 
+  public delList: Array<DelList>;
 
   ngOnInit() {
     this.getVerifiedParts(0);
@@ -27,9 +28,9 @@ export class ListComponent implements OnInit {
   getVerifiedParts(page: number) {
     this.getService.getVerifiedParts(page, 20).subscribe(
       data => {
-        this.partsArray = data["content"];
+        this.delList = data["content"];
         this.pages = new Array(data["totalPages"]);
-        if (this.partsArray.length == 0) {
+        if (this.delList.length == 0) {
           this.modalService.show(this.modal);
           this.router.navigate(['/admin/verify']);
         }
@@ -44,6 +45,24 @@ export class ListComponent implements OnInit {
     if (page >= 0 && page < this.pages.length) {
       this.getVerifiedParts(page);
       this.actualPage = page;
+    }
+  }
+
+  delete(){
+    let markedItens: Array<number> = new Array();
+
+    this.delList.forEach(element => {
+      if (element.marked){
+        markedItens.push(element.id);
+      }
+    });
+
+    if (markedItens.length > 0){
+      this.getService.delete(markedItens).subscribe( 
+        respose => {
+          this.changePage(this.actualPage);
+        }
+      );
     }
   }
 }

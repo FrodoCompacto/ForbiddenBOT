@@ -26,12 +26,13 @@ export class LoginComponent implements OnInit {
       this.authService.successfulLogin(response.headers.get('Authorization'));
       this.modalService.show(templateSuccess);
       this.router.navigate(['/upload']);
+      this.processing = false
     },
     error => {
       this.modalService.show(templateFail);
+      this.processing = false
     }
     );
-    setTimeout(() => this.processing = false, 1000);
   }
 
 

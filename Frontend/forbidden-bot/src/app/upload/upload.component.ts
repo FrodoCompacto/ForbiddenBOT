@@ -73,12 +73,6 @@ readThis(inputValue: any): void {
     this.image = myReader.result;
   }
   myReader.readAsDataURL(file);
-} 
-
-resetOrientation(){
-  if ( this.exPart.type == PartType.HEAD ){
-    this.exPart.isLeftOriented == true;
-  }
 }
 
 }
