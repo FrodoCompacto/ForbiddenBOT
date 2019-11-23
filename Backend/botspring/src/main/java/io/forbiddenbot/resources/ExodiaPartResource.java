@@ -21,10 +21,13 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.amazonaws.services.mediapackagevod.model.ForbiddenException;
+
 import io.forbiddenbot.domain.ExodiaPart;
 import io.forbiddenbot.dto.ExodiaPartDTO;
 import io.forbiddenbot.dto.ExodiaPartNewDTO;
 import io.forbiddenbot.services.ExodiaPartService;
+import io.forbiddenbot.services.validation.CaptchaValidator;
 
 @RestController
 @RequestMapping(value="/exodiaparts")
@@ -32,6 +35,9 @@ public class ExodiaPartResource {
 	
 	@Autowired
 	private ExodiaPartService service;
+	
+	@Autowired
+	private CaptchaValidator captchaValidator;
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
 	public ResponseEntity<ExodiaPartDTO> find(@PathVariable Integer id) {
@@ -44,6 +50,11 @@ public class ExodiaPartResource {
 	
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Void> insert(@Valid @RequestBody ExodiaPartNewDTO exDTO) {
+		Boolean isValidCaptcha = captchaValidator.validateCaptcha(exDTO.getCaptchaResponse()); 
+	    if(!isValidCaptcha){
+	        throw new ForbiddenException("Captcha is not valid");
+	    }
+		
 		ExodiaPart ex = exDTO.toExodiaPart();
 		ex.setImage(service.parseImg(exDTO.getImageStr(), exDTO.getIsLeftOriented()));
 		ex = service.insert(ex);

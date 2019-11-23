@@ -26,7 +26,7 @@ public class ExodiaPartNewDTO implements Serializable {
 	@NotNull(message = "Image cannot be null")
 	private String imageStr;
 	
-	
+	private String captchaResponse;
 	
 	
 	public ExodiaPartNewDTO() {
@@ -76,6 +76,14 @@ public class ExodiaPartNewDTO implements Serializable {
 
 	public void setImageStr(String imageStr) {
 		this.imageStr = imageStr;
+	}
+
+	public String getCaptchaResponse() {
+		return captchaResponse;
+	}
+
+	public void setCaptchaResponse(String captchaResponse) {
+		this.captchaResponse = captchaResponse;
 	}
 
 

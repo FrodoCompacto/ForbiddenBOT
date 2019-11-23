@@ -81,6 +81,8 @@
       <br>
 
       <div class="form-group" align="center">
+          <re-captcha (resolved)="resolved($event)" siteKey="6LfyOMQUAAAAAH8r9__CS1-b_jUNeB5NwzQVtrUX"></re-captcha>
+          <br>
       <button
         class="btn btn-dark" 
         (click)="send(templateSuccess, templateFail)"
@@ -88,8 +90,8 @@
         Submit
       </button>
       <small id="subhelp" class="form-text text-muted"
-          >Please check the orientation of your piece before submitting.</small
-        >
+          >Please check the orientation of your piece before submitting.</small>
+
         <br>
         <div *ngIf="processing"><div class="spinner-border" role="status"></div><div>Due to free hosting, this may take up to 30 seconds.</div></div>
         

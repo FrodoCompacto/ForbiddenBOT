@@ -39,8 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private Environment env;
 	
 	private static final String[] PUBLIC_MATCHERS = {
-			"/exodiaparts",
-			"/exodiaparts/uploadexodiaimg"
+			"/exodiaparts"
 	};
 
 	@Override

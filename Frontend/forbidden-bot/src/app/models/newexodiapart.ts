@@ -6,6 +6,7 @@ export class NewExodiaPart {
   public type: PartType;
   public isLeftOriented: boolean;
   public imageStr: string;
+  public captchaResponse: string;
 
   public NewExodiaPart(){
   }

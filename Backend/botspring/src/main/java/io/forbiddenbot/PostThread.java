@@ -3,11 +3,11 @@ package io.forbiddenbot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RowThread extends Thread {
+public class PostThread extends Thread {
 	
 	public static List<String> ipList = new ArrayList<>();
 
-	public RowThread() {
+	public PostThread() {
 	}
 
 	public void run() {
