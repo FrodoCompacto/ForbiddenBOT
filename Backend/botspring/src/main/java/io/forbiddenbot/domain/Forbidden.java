@@ -40,6 +40,13 @@ public class Forbidden implements Serializable {
 		this.id = id;
 		this.postDate = postDate;
 	}
+	
+	public Forbidden(Integer id, Date postDate, List<ExodiaPart> list) {
+		super();
+		this.id = id;
+		this.postDate = postDate;
+		this.exodiaParts = list;
+	}
 
 	public Integer getId() {
 		return id;

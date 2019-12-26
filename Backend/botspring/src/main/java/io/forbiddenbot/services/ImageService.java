@@ -5,8 +5,10 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 
 import javax.imageio.ImageIO;
 
@@ -110,4 +112,30 @@ public class ImageService {
 		return Scalr.resize(sourceImg, Scalr.Method.ULTRA_QUALITY, size);
 	}
 	
+	public BufferedImage fillTemplate(BufferedImage rArm, BufferedImage lArm, BufferedImage Head, BufferedImage rLeg, BufferedImage lLeg) {
+		BufferedImage newImage = new BufferedImage(750,725, BufferedImage.TYPE_INT_RGB);
+		Graphics2D g2 = newImage.createGraphics();
+		g2.setPaint(Color.CYAN);
+        g2.fillRect(0, 0, 750, 725);
+        
+		try {
+			BufferedImage template = ImageIO.read(new URL("https://forbidden-bot.s3-sa-east-1.amazonaws.com/template.jpg"));
+	        g2.drawImage(template, null, 0, 0);
+	        
+	        g2.drawImage(rArm, null, 35,78);
+	        g2.drawImage(Head, null, 286,78);
+	        g2.drawImage(lArm, null, 536,79);
+	        g2.drawImage(rLeg, null, 165,440);
+	        g2.drawImage(lLeg, null, 417,440);
+	        
+	        
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		g2.dispose();
+		return newImage;
+		
+	}
 }

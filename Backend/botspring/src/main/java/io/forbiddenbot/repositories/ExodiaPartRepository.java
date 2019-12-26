@@ -1,6 +1,9 @@
 package io.forbiddenbot.repositories;
 
 
+
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -8,6 +11,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import io.forbiddenbot.domain.ExodiaPart;
+import io.forbiddenbot.domain.enums.PartType;
 
 @Repository
 public interface ExodiaPartRepository extends JpaRepository<ExodiaPart, Integer> {
@@ -26,5 +30,8 @@ public interface ExodiaPartRepository extends JpaRepository<ExodiaPart, Integer>
 	
 	@Query("SELECT obj FROM ExodiaPart obj WHERE obj.isVerified = FALSE and obj.type = 3")
 	Page<ExodiaPart> findUnverifiedHeads(Pageable pageRequest);
+	
+	@Query("SELECT obj FROM ExodiaPart obj WHERE obj.isVerified = TRUE and obj.type = ?1")
+	List<ExodiaPart> getVerfifiedParts(int type);
 	
 }

@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 //import io.forbiddenbot.RowThread;
 import io.forbiddenbot.domain.Admin;
 import io.forbiddenbot.domain.ExodiaPart;
+import io.forbiddenbot.domain.enums.PartType;
 import io.forbiddenbot.repositories.ExodiaPartRepository;
 import io.forbiddenbot.security.UserSS;
 import io.forbiddenbot.services.exceptions.DataIntegrityException;
@@ -164,6 +165,11 @@ public class ExodiaPartService {
         return sb.toString();
 
     }
+	
+	public List<ExodiaPart> getVerfifiedParts(PartType type){
+		int iType = type.getCod();
+		return repo.getVerfifiedParts(iType);
+	}
 }
 
 
