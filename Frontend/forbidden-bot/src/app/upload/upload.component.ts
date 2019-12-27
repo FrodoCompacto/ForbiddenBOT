@@ -71,6 +71,7 @@ export class UploadComponent implements OnInit {
           this.exPart = new NewExodiaPart();
           this.exPart.isLeftOriented = false;
           this.myInputVariable.nativeElement.value = "";
+          window.location.reload();
         },
         error => {
           this.message = "Request not sent, please try again.";

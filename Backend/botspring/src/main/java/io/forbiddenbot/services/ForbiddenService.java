@@ -99,7 +99,7 @@ public class ForbiddenService {
 			BufferedImage rLeg = ImageIO.read(new URL((list.get(3).getImage())));
 			BufferedImage lLeg = ImageIO.read(new URL((list.get(4).getImage())));
 
-			postImg = imageService.fillTemplate(rArm, imageService.flip(lArm), Head, rLeg, imageService.flip(lLeg));
+			postImg = imageService.fillTemplate(imageService.flip(rArm), lArm, Head, imageService.flip(rLeg), lLeg);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -120,7 +120,11 @@ public class ForbiddenService {
 		InputStream is = new ByteArrayInputStream(os.toByteArray());
 		
 		list.forEach(x -> {
-			if (x.getUploader().isEmpty()) {
+			if (x.getUploader() == null) {
+				if (getRandomNumberInRange(0,1) == 0) {
+					uploadersList.add("[DATA EXPUNGED]");
+				} else uploadersList.add("[REDACTED]");
+			}else if (x.getUploader().isEmpty()) {
 				if (getRandomNumberInRange(0,1) == 0) {
 					uploadersList.add("[DATA EXPUNGED]");
 				} else uploadersList.add("[REDACTED]");
