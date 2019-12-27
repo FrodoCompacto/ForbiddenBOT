@@ -11,7 +11,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import io.forbiddenbot.domain.ExodiaPart;
-import io.forbiddenbot.domain.enums.PartType;
 
 @Repository
 public interface ExodiaPartRepository extends JpaRepository<ExodiaPart, Integer> {

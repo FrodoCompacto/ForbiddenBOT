@@ -24,6 +24,7 @@ public class Forbidden implements Serializable {
 	private Integer id;
 	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
 	private Date postDate;
+	private String postURL;
 	
 	@ManyToMany
 	@JoinTable(name="FORBIDDEN_PARTS",
@@ -41,11 +42,12 @@ public class Forbidden implements Serializable {
 		this.postDate = postDate;
 	}
 	
-	public Forbidden(Integer id, Date postDate, List<ExodiaPart> list) {
+	public Forbidden(Integer id, Date postDate, List<ExodiaPart> list, String url) {
 		super();
 		this.id = id;
 		this.postDate = postDate;
 		this.exodiaParts = list;
+		this.postURL = url;
 	}
 
 	public Integer getId() {
@@ -99,6 +101,14 @@ public class Forbidden implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	public String getPostURL() {
+		return postURL;
+	}
+
+	public void setPostURL(String postURL) {
+		this.postURL = postURL;
 	}
 
 	
