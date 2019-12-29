@@ -76,6 +76,7 @@ public class ForbiddenService {
 		BufferedImage postImg = null;
 
 		List<ExodiaPart> listArms = exodiaPartService.getVerfifiedParts(PartType.ARM);
+		if (listArms.size() < 2) return false;
 		list.add(listArms.get(getRandomNumberInRange(0, listArms.size())));
 		do {
 			aux = listArms.get(getRandomNumberInRange(0, listArms.size()));
@@ -83,9 +84,11 @@ public class ForbiddenService {
 		list.add(aux);
 
 		List<ExodiaPart> listHeads = exodiaPartService.getVerfifiedParts(PartType.HEAD);
+		if (listHeads.size() < 1) return false;
 		list.add(listHeads.get(getRandomNumberInRange(0, listHeads.size())));
 
 		List<ExodiaPart> listLegs = exodiaPartService.getVerfifiedParts(PartType.LEG);
+		if (listLegs.size() < 2) return false;
 		list.add(listLegs.get(getRandomNumberInRange(0, listLegs.size())));
 		do {
 			aux = listLegs.get(getRandomNumberInRange(0, listLegs.size()));
