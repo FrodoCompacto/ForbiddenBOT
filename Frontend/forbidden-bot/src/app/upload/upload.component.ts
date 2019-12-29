@@ -9,6 +9,7 @@ import {
 } from "@angular/core";
 import { BsModalService } from "ngx-bootstrap";
 import { PartType } from "../models/enums/parttype";
+import { ImageCroppedEvent } from "ngx-image-cropper";
 
 @Component({
   selector: "app-upload",
@@ -19,9 +20,11 @@ export class UploadComponent implements OnInit {
   @ViewChild("myInput", { static: false })
   myInputVariable: ElementRef;
 
+  public imageChangedEvent: any = "";
+  public croppedImage: any = "";
+
   public processing: boolean = false;
   public exPart: NewExodiaPart = new NewExodiaPart();
-  public image;
   public message: String;
 
   constructor(
@@ -34,7 +37,7 @@ export class UploadComponent implements OnInit {
   }
 
   send(templateSuccess: TemplateRef<any>, templateFail: TemplateRef<any>) {
-    this.exPart.imageStr = this.image;
+    this.exPart.imageStr = this.croppedImage;
 
     if (
       this.exPart.type != PartType.ARM &&
@@ -55,7 +58,7 @@ export class UploadComponent implements OnInit {
     ) {
       this.message = "Nickname must be 15 characters or less.";
       this.modalService.show(templateFail);
-    } else if (!this.exPart.imageStr) {
+    } else if (!this.exPart.imageStr || this.exPart.imageStr.length == "".length) {
       this.message = "Please select an valid image.";
       this.modalService.show(templateFail);
     } else if (this.exPart.captchaResponse == null) {
@@ -82,20 +85,17 @@ export class UploadComponent implements OnInit {
     }
   }
 
-  changeListener($event): void {
-    this.readThis($event.target);
+  fileChangeEvent(event: any): void {
+    this.imageChangedEvent = event;
   }
-
-  readThis(inputValue: any): void {
-    var file: File = inputValue.files[0];
-    var myReader: FileReader = new FileReader();
-
-    myReader.onloadend = e => {
-      this.image = myReader.result;
-    };
-    myReader.readAsDataURL(file);
+  imageCropped(event: ImageCroppedEvent) {
+    this.croppedImage = event.base64;
   }
-
+  loadImageFailed(templateFail: TemplateRef<any>) {
+    this.message = "Wrong file type was selected (only png and jpg are allowed).";
+      this.modalService.show(templateFail);
+  }
+  
   resolved(captchaResponse: string) {
     this.exPart.captchaResponse = captchaResponse;
   }

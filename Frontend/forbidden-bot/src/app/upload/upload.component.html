@@ -17,39 +17,65 @@
         >
       </div>
 
-      <br> 
+      <br />
       <div class="form-group">
-          <label class="form-check-label">
-              Part Type
-            </label>
-      <div class="form-check">
-          <input class="form-check-input" type="radio" name="radios" id="radio1" value="1" [(ngModel)]="exPart.type">
+        <label class="form-check-label">
+          Part Type
+        </label>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="radios"
+            id="radio1"
+            value="1"
+            [(ngModel)]="exPart.type"
+          />
           <label class="form-check-label" for="radio1">
             Arm of the Forbidden One
           </label>
         </div>
         <div class="form-check">
-          <input class="form-check-input" type="radio" name="radios" id="radio2" value="2" [(ngModel)]="exPart.type">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="radios"
+            id="radio2"
+            value="2"
+            [(ngModel)]="exPart.type"
+          />
           <label class="form-check-label" for="radio2">
             Leg of the Forbidden One
           </label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="radios" id="radio3" value="3" [(ngModel)]="exPart.type" (click)="exPart.isLeftOriented = true">
-            <label class="form-check-label" for="radio3">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="radios"
+            id="radio3"
+            value="3"
+            [(ngModel)]="exPart.type"
+            (click)="exPart.isLeftOriented = true"
+          />
+          <label class="form-check-label" for="radio3">
             Head of the Forbidden One
-            </label>
-          </div>
-          <small id="typehelp" class="form-text text-muted"
+          </label>
+        </div>
+        <small id="typehelp" class="form-text text-muted"
           >Select part type.</small
         >
-          </div>
-      
+      </div>
+
       <div class="form-group">
-      <label class="form-check-label" for="check" [ngClass]="{'text-muted': !(exPart.type == 1 || exPart.type == 2)}">
+        <label
+          class="form-check-label"
+          for="check"
+          [ngClass]="{ 'text-muted': !(exPart.type == 1 || exPart.type == 2) }"
+        >
           Left Oriented
         </label>
-      
+
         <input
           style="margin-left: 10px;"
           type="checkbox"
@@ -61,61 +87,99 @@
         <small id="checkhelp" class="form-text text-muted"
           >Check if it is the left leg or arm.</small
         >
-        
       </div>
-     
+
       <div class="form-group">
         <label for="exampleFormControlFile1">Card Image</label>
-        <input #myInput
+        <input
+          #myInput
           type="file"
           id="exampleFormControlFile1"
           class="form-control-file"
           accept="image/*"
-          (change)="changeListener($event)"
+          (change)="fileChangeEvent($event)"
         />
         <small id="imgh" class="form-text text-muted"
-          >Only .jpg or .png files. The image will be automatically resized to a square.</small
+          >Only .jpg or .png files.</small
         >
+
+        <image-cropper
+          [imageChangedEvent]="imageChangedEvent"
+          [maintainAspectRatio]="true"
+          [resizeToWidth]="181"
+          (imageCropped)="imageCropped($event)"
+          (loadImageFailed)="loadImageFailed(templateFail)"
+        ></image-cropper>
       </div>
-      <br>
-      <br>
+      <br />
+      <br />
 
       <div class="form-group" align="center">
-          <re-captcha (resolved)="resolved($event)" siteKey="6LfyOMQUAAAAAH8r9__CS1-b_jUNeB5NwzQVtrUX"></re-captcha>
-          <br>
-      <button
-        class="btn btn-dark" 
-        (click)="send(templateSuccess, templateFail)"
-      >
-        Submit
-      </button>
-      <small id="subhelp" class="form-text text-muted"
-          >Please check the orientation of your piece before submitting.</small>
+        <re-captcha
+          (resolved)="resolved($event)"
+          siteKey="6LfyOMQUAAAAAH8r9__CS1-b_jUNeB5NwzQVtrUX"
+        ></re-captcha>
+        <br />
+        <button
+          class="btn btn-dark"
+          (click)="send(templateSuccess, templateFail)"
+        >
+          Submit
+        </button>
+        <small id="subhelp" class="form-text text-muted"
+          >Please check the orientation of your piece before submitting.</small
+        >
 
-        <br>
-        <div *ngIf="processing"><div class="spinner-border" role="status"></div><div>This may take up to 30 seconds.</div></div>
-        
-    </div>
-  </div>
-
-    <div class="col-sm" align="center">
-      <div class="jumbotron jumbotron-fluid">
-        <div class="container">
-          <h1 class="display-4">Tips: </h1>
-          <ul>
-            <li class="lead">The ideal aspect ratio is a square image.</li>
-            <li class="lead">The image will be automatically resized to a square.</li>
-            <li class="lead">Instead you can crop your image easily <a href="https://croppola.com/" target="_blank">here.</a></li>
-            <li class="lead">Check below an example of what you are sending.</li>
-          </ul> 
+        <br />
+        <div *ngIf="processing">
+          <div class="spinner-border" role="status"></div>
+          <div>This may take up to 30 seconds.</div>
         </div>
       </div>
+    </div>
 
-      <img *ngIf="exPart.type == 3" src="assets/head.jpg" alt="EXAMPLE PIC"> 
-      <img *ngIf="exPart.type == 1 && exPart.isLeftOriented == true" src="assets/leftarm.jpg" alt="EXAMPLE PIC"> 
-      <img *ngIf="exPart.type == 1 && exPart.isLeftOriented == false" src="assets/rightarm.jpg" alt="EXAMPLE PIC"> 
-      <img *ngIf="exPart.type == 2 && exPart.isLeftOriented == true" src="assets/leftleg.jpg" alt="EXAMPLE PIC"> 
-      <img *ngIf="exPart.type == 2 && exPart.isLeftOriented == false" src="assets/rightleg.jpg" alt="EXAMPLE PIC"> 
+    <div class="col-sm" align="center">
+      <div class="parent" class="jumbotron jumbotron-fluid">
+        <div class="container">
+          <h1 class="display-4">Tips:</h1>
+          <ul>
+            <li class="lead">The ideal aspect ratio is a square image.</li>
+            <li class="lead">You can crop your image easily after selecting it.</li>
+            <li class="lead">
+              Check below an example of what you are sending.
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="parent">
+      <img [src]="croppedImage" class="image1"/>
+
+      <img *ngIf="exPart.type == 3" src="assets/head.png" alt="EXAMPLE PIC" class="image2" />
+      <img
+        *ngIf="exPart.type == 1 && exPart.isLeftOriented == true"
+        src="assets/leftarm.png"
+        alt="EXAMPLE PIC"
+        class="image2"
+      />
+      <img
+        *ngIf="exPart.type == 1 && exPart.isLeftOriented == false"
+        src="assets/rightarm.png"
+        alt="EXAMPLE PIC"
+        class="image2"
+      />
+      <img
+        *ngIf="exPart.type == 2 && exPart.isLeftOriented == true"
+        src="assets/leftleg.png"
+        alt="EXAMPLE PIC"
+        class="image2"
+      />
+      <img
+        *ngIf="exPart.type == 2 && exPart.isLeftOriented == false"
+        src="assets/rightleg.png"
+        alt="EXAMPLE PIC"
+        class="image2"
+      />
+    </div>
     </div>
   </div>
 </div>

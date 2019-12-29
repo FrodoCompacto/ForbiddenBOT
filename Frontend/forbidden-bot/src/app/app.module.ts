@@ -13,6 +13,7 @@ import { AboutComponent } from './about/about.component';
 import { DonateComponent } from './donate/donate.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './guards/auth.guard';
+import { ImageCropperModule } from 'ngx-image-cropper';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import { AuthGuard } from './guards/auth.guard';
     HttpClientModule,
     ModalModule.forRoot(),
     RecaptchaModule,
+    ImageCropperModule
   ],
   providers: [AuthService, AuthGuard],
   bootstrap: [AppComponent]
