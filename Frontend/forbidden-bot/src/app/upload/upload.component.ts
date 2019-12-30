@@ -10,6 +10,7 @@ import {
 import { BsModalService } from "ngx-bootstrap";
 import { PartType } from "../models/enums/parttype";
 import { ImageCroppedEvent } from "ngx-image-cropper";
+import { RecaptchaComponent } from 'ng-recaptcha';
 
 @Component({
   selector: "app-upload",
@@ -19,6 +20,9 @@ import { ImageCroppedEvent } from "ngx-image-cropper";
 export class UploadComponent implements OnInit {
   @ViewChild("myInput", { static: false })
   myInputVariable: ElementRef;
+
+  @ViewChild('captchaRef', {static: false})
+  captchaRef: RecaptchaComponent;
 
   public imageChangedEvent: any = "";
   public croppedImage: any = "";
@@ -70,11 +74,11 @@ export class UploadComponent implements OnInit {
       this.postService.send(this.exPart).subscribe(
         response => {
           this.modalService.show(templateSuccess);
+          this.captchaRef.reset();
           this.processing = false;
           this.exPart = new NewExodiaPart();
           this.exPart.isLeftOriented = false;
           this.myInputVariable.nativeElement.value = "";
-          window.location.reload();
         },
         error => {
           this.message = "Request not sent, please try again.";
