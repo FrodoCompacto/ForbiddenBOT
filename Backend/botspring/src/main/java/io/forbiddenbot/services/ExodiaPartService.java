@@ -18,6 +18,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.amazonaws.services.s3.model.DeleteObjectsRequest.KeyVersion;
+
 //import io.forbiddenbot.RowThread;
 import io.forbiddenbot.domain.Admin;
 import io.forbiddenbot.domain.ExodiaPart;
@@ -72,13 +74,20 @@ public class ExodiaPartService {
 	}
 	
 	public void delete(ArrayList<Integer> idList) {
+		ExodiaPart aux;
+		List<KeyVersion> keys = new ArrayList<KeyVersion>();
+		
 		for(Integer id : idList) {
-			find(id);
+			aux = find(id);
 			try {
 				repo.deleteById(id);
+				keys.add(new KeyVersion(aux.getImage().substring(49)));
 			} catch (DataIntegrityViolationException e) {
 				throw new DataIntegrityException("It is not possible to exclude verified exodia parts.");
 			}
+		}
+		if (!keys.isEmpty()) {
+			s3Service.deleteFiles(keys);
 		}
 	}
 	

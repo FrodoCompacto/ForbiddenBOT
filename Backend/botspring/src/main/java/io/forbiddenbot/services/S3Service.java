@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
-
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,6 +13,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.DeleteObjectsRequest;
+import com.amazonaws.services.s3.model.DeleteObjectsRequest.KeyVersion;
+import com.amazonaws.services.s3.model.DeleteObjectsResult;
+import com.amazonaws.services.s3.model.DeleteObjectsResult.DeletedObject;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 
 import io.forbiddenbot.services.exceptions.FileException;
@@ -52,6 +56,14 @@ public class S3Service {
 			throw new FileException("Failed to convert URL to URI.");
 		}
 
+	}
+	
+	public List<DeletedObject> deleteFiles(List<KeyVersion> keys) {
+
+		DeleteObjectsRequest request = new DeleteObjectsRequest(bucketName).withKeys(keys);
+		DeleteObjectsResult result = s3client.deleteObjects(request);
+		return result.getDeletedObjects();
+          
 	}
 
 }
