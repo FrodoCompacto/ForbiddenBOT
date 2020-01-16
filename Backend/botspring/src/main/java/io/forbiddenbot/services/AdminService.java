@@ -37,5 +37,9 @@ public class AdminService {
 	public List<Admin> findAll() {
 		return repo.findAll();
 	}
+	
+	public Admin insert(Admin adm) {
+		return repo.save(adm);
+	}
 
 }

@@ -22,7 +22,6 @@ public class Admin implements Serializable {
 	private Integer id;
 	private String facebookUrl;
 	private String login;
-	
 	@JsonIgnore
 	private String password;
 	
@@ -30,10 +29,10 @@ public class Admin implements Serializable {
 	@OneToMany(mappedBy="verifier")
 	private List<ExodiaPart> verifiedParts = new ArrayList<>();
 	
-	public Admin(){}
+	public Admin(){
+	}
 	
 	public Admin(Integer id, String facebookUrl, String login, String password) {
-		super();
 		this.id = id;
 		this.facebookUrl = facebookUrl;
 		this.login = login;

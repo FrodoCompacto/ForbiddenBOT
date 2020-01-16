@@ -1,0 +1,73 @@
+<div class="container" align="center">
+    <br/>
+    <form class="col-3" #f="ngForm" (ngSubmit)="login(f,templateSuccess,templateFail)">
+      <div class="form-group">
+        <label for="login">Username</label>
+        <input
+          type="text"
+          class="form-control"
+          id="login"
+          placeholder="Username"
+          name="login"
+          ngModel
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="InputPassword">Password</label>
+        <input
+          type="password"
+          class="form-control"
+          id="InputPassword"
+          placeholder="Password"
+          name="password"
+          ngModel
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="facebookUrl">Facebook URL</label>
+        <input
+          type="text"
+          class="form-control"
+          id="facebookUrl"
+          placeholder="Facebook URL"
+          name="facebookUrl"
+          ngModel
+          required
+        />
+      </div>
+      <button type="submit" class="btn btn-dark" [disabled]="!f.valid">Send</button>
+    </form>
+    <div><br>
+      <div *ngIf="processing" >
+    <div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+      <br>
+      <a> Sending... </a></div>
+  </div>
+  
+  <ng-template #templateSuccess>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left text-success">Sucess!</h4>
+      <!-- <button type="button" class="close pull-right" aria-label="Close" (click)="hideModal()">
+        <span aria-hidden="true">&times;</span>
+      </button> -->
+    </div>
+    <div class="modal-body">
+      Success!
+    </div>
+  </ng-template>
+  
+  <ng-template #templateFail>
+      <div class="modal-header">
+        <h4 class="modal-title pull-left text-danger">Failure</h4>
+        <!-- <button type="button" class="close pull-right" aria-label="Close" (click)="hideModal()">
+          <span aria-hidden="true">&times;</span>
+        </button> -->
+      </div>
+      <div class="modal-body">
+          Register failed.
+      </div>
+    </ng-template>

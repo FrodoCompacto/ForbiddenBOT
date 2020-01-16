@@ -1,3 +1,4 @@
+import { Admin } from '../models/Admin';
 import { take, catchError } from 'rxjs/operators';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { environment } from './../../environments/environment';
@@ -67,6 +68,15 @@ export class GetService {
       'Authorization': 'Bearer ' + sessionStorage.getItem("token")});
 
       return this.http.post(`${this.API}exodiaparts/delete`, idList,{
+        'headers': authHeader})
+      .pipe(take(1),catchError(this.handleError));
+  }
+
+  insertNewAdm(admin: Admin): Observable<any> {
+    let authHeader = new HttpHeaders({
+      'Authorization': 'Bearer ' + sessionStorage.getItem("token")});
+
+      return this.http.post(`${this.API}admins`, admin,{
         'headers': authHeader})
       .pipe(take(1),catchError(this.handleError));
   }

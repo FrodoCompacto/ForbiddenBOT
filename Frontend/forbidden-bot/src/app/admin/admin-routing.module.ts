@@ -1,3 +1,4 @@
+import { RegisterComponent } from './register/register.component';
 import { AdminComponent } from './admin.component';
 import { VerifyComponent } from './verify/verify.component';
 import { ListComponent } from './list/list.component';
@@ -8,7 +9,8 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
   { path: '', component: AdminComponent, children: [
     { path: 'list', component: ListComponent},
-    { path: 'verify', component: VerifyComponent}
+    { path: 'verify', component: VerifyComponent},
+    { path: 'register', component: RegisterComponent}
   ]}
 ];
 
